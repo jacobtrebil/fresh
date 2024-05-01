@@ -8,6 +8,37 @@ const openai = new OpenAI({
 });
  
 export const dynamic = 'edge';
+ 
+export async function POST(req: Request) {
+  const { image } = await req.json();
+
+  console.log("image = ", image);
+
+  const response = await openai.chat.completions.create({
+    model: 'gpt-4-turbo',
+    stream: true,
+    max_tokens: 4096,
+    messages: [
+        {
+            role: 'system',
+            //@ts-ignore
+            content: [
+                { type: "text", text: "What's in this image?" },
+                {
+                    type: "image_url",
+                    image_url: { "url": image }
+                }
+            ]
+        }
+    ],
+  });
+ 
+  // Convert the response into a friendly text-stream
+  const stream = OpenAIStream(response);
+  // Respond with the stream
+  return new StreamingTextResponse(stream);
+}
+
 
 /* const createRequestMessages = async (req: any) => {
     // console.log("req = ", await req.text());
@@ -32,9 +63,7 @@ export const dynamic = 'edge';
         }
     ]
 } */
- 
-export async function POST(req: Request) {
-    const { image } = await req.json();
+
   // const { messages, data } = await req.json();
   // console.log("req = ", await req.json());
   // const inputMessages = await req.json();
@@ -50,28 +79,3 @@ export async function POST(req: Request) {
   // console.log("req = ", req);
  
   // Ask OpenAI for a streaming chat completion given the prompt
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4-vision-preview',
-    stream: true,
-    // messages: [messages],
-    messages: [
-        {
-            role: 'system',
-            ///@ts-ignore
-            content: [
-                { type: "text", text: "What's in this image?" },
-                {
-                    type: "image",
-                    image_url: image
-                }
-            ]
-        }
-    ],
-    max_tokens: 4096,
-  });
- 
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
-}
