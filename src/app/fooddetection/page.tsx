@@ -39,10 +39,7 @@ export default function FoodDetection() {
                 image: image,
             })
         })
-        .then((response) => {
-            setOpenAIResponse((response) => response);
-        })
-        /* .then(async (response) => {
+        .then(async (response) => {
             const reader = response.body?.getReader();
 
             while (true) {
@@ -52,12 +49,13 @@ export default function FoodDetection() {
                 if (done) {
                     break;
                 }
-                var currentChunk = new TextDecoder().decode(value);
+                setOpenAIResponse((prev) => prev + new TextDecoder().decode(value));
+                /* var currentChunk = new TextDecoder().decode(value);
                 console.log("value =", value);
                 console.log("currentChunk = ", currentChunk);
-                setOpenAIResponse((prev) => prev + currentChunk);
+                setOpenAIResponse((prev) => prev + currentChunk); */
             }
-        }) */
+        })
     }       
 
     function handleFileChange(e: any) {
