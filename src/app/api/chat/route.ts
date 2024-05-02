@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   console.log("image = ", image);
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4-vision-preview',
+    model: 'gpt-4-1106-vision-preview',
     stream: true,
     max_tokens: 4096,
     messages: [
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
             role: 'system',
             //@ts-ignore
             content: [
-                // { type: "text", text: "What's in this image?" },
+                { type: "text", text: "What's in this image?" },
                 {
                     type: "image_url",
                     image_url: { 

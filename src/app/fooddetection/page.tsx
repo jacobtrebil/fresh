@@ -78,6 +78,7 @@ export default function FoodDetection() {
 
     useEffect(() => {
       console.log("image = ", image);
+      console.log("typeof image = ", typeof image);
     }, [image])
 
   return (
