@@ -1,28 +1,15 @@
 'use client';
  
 import { useCompletion } from 'ai/react';
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect, useCallback } from 'react';
 import { ReadableStreamDefaultReadResult } from 'stream/web';
+import { readStreamableValue } from 'ai/rsc';
  
 export default function FoodDetection() {
   // const {  input, handleInputChange, handleSubmit, completion, complete } = useCompletion({ api: '/api/chat' });
 
   const [image, setImage] = useState("");
   const [openAIResponse, setOpenAIResponse] = useState("");
-
-    function handleImageChange(e: any) {
-        const imageData = e.target.files[0];
-        setImage(imageData);
-    }
-
-    function callAPI() {
-        if (image !== null) {
-            console.log(image);
-            console.log(PROMPT_TEMPLATE);
-
-            // complete(PROMPT_TEMPLATE/*, image*/);
-        }
-    }
 
     async function handleSubmit() {
         if (image === "") {
@@ -102,3 +89,17 @@ export default function FoodDetection() {
     </div>
   );
 }
+
+    /* function callAPI() {
+        if (image !== null) {
+            console.log(image);
+            console.log(PROMPT_TEMPLATE);
+
+            // complete(PROMPT_TEMPLATE/);
+        }
+    } */
+
+    /* function handleImageChange(e: any) {
+        const imageData = e.target.files[0];
+        setImage(imageData);
+    } */

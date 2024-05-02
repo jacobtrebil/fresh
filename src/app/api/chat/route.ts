@@ -23,7 +23,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: "You are an AI that takes an image and returns what food is in the image" },
+                { type: "text", text: "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a json object. NEVER return a string. example: { food: pringles, calories: 150, protein: 1 } if you're unsure of a variable, still do it and provide your best guess instead." },
                 {
                     type: "image_url",
                     image_url: { 
