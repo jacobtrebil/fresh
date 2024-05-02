@@ -12,7 +12,7 @@ export default function Chat() {
   }
 
   const goToHealthGPT = () => {
-    window.location.href = 'https://chat.openai.com/';
+    window.location.href = 'https://chat.openai.com/g/g-T78cMCV5j-vibe-chat';
   }
 
   return (
@@ -20,7 +20,7 @@ export default function Chat() {
       <h1>Vibe</h1>
       <a href="https://chat.openai.com/" target="_blank" ><button className="button">Vibe Chat →</button></a><br></br>
       <button className="button" onClick={goToFoodDetection}>Food Detection →</button><br></br>
-      <button className="button" onClick={goToWhoopData}>Whoop Data →</button><br></br>
+      <button className="button" onClick={goToWhoopData}>Health Impact →</button><br></br>
     </div>
   );
 }
