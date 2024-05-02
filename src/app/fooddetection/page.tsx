@@ -9,7 +9,11 @@ export default function FoodDetection() {
   // const {  input, handleInputChange, handleSubmit, completion, complete } = useCompletion({ api: '/api/chat' });
 
   const [image, setImage] = useState("");
-  const [openAIResponse, setOpenAIResponse] = useState("");
+  const [openAIResponse, setOpenAIResponse] = useState({
+    food: "",
+    calories: "",
+    protein: "",
+  });
 
     async function handleSubmit() {
         if (image === "") {
@@ -26,7 +30,9 @@ export default function FoodDetection() {
                 image: image,
             })
         })
-        .then(async (response) => {
+        .then((response) => response.json())
+        .then(response => setOpenAIResponse(response));
+        /* .then(async (response) => {
             const reader = response.body?.getReader();
 
             while (true) {
@@ -36,13 +42,11 @@ export default function FoodDetection() {
                 if (done) {
                     break;
                 }
-                setOpenAIResponse((prev) => prev + new TextDecoder().decode(value));
-                /* var currentChunk = new TextDecoder().decode(value);
-                console.log("value =", value);
-                console.log("currentChunk = ", currentChunk);
-                setOpenAIResponse((prev) => prev + currentChunk); */
+                // setOpenAIResponse((prev) => prev + new TextDecoder().decode(value));
+                var currentChunk = new TextDecoder().decode(value);
+                setOpenAIResponse((prev) => prev + currentChunk);
             }
-        })
+        }) */
     }       
 
     function handleFileChange(e: any) {
@@ -68,6 +72,11 @@ export default function FoodDetection() {
       console.log("typeof image = ", typeof image);
     }, [image])
 
+    useEffect(() => {
+        console.log("openAIResponse = ", openAIResponse);
+        console.log("typeof openAIResponse = ", typeof openAIResponse);
+    }, [openAIResponse])
+
   return (
     <div className="main">
       <h1>Food Detection</h1>
@@ -84,7 +93,14 @@ export default function FoodDetection() {
         // onChange={(e) => setImage(e.target.files[0])}
         /><br></br>
       <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
-      { openAIResponse !== "" ? <div><p>{openAIResponse}</p><p>{new Date().toLocaleString()}</p></div> : null}
+      { openAIResponse?.food !== "" ? 
+      <div>
+        <h2>Food Tracker</h2>
+        <p>Food: {openAIResponse?.food}</p>
+        <p>Calories: {openAIResponse?.calories}</p>
+        <p>Protein: {openAIResponse?.protein}</p>
+        <p>{new Date().toLocaleString()}</p>
+    </div> : null}
     </div>
   );
 }

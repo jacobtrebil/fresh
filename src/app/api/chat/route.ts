@@ -1,5 +1,4 @@
 import OpenAI from 'openai';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
 // import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
 // Create an OpenAI API client (that's edge friendly!)
@@ -16,14 +15,13 @@ export async function POST(req: Request) {
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-1106-vision-preview',
-    stream: true,
     max_tokens: 4096,
     messages: [
         {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a json object. NEVER return a string. example: { food: pringles, calories: 150, protein: 1 } if you're unsure of a variable, still do it and provide your best guess instead." },
+                { type: "text", text: "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a json object. NEVER return a string. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken, calories: 150, protein: 20 } if you're unsure of a variable, still do it and provide your best guess instead." },
                 {
                     type: "image_url",
                     image_url: { 
@@ -34,11 +32,26 @@ export async function POST(req: Request) {
         }
     ],
   });
+
+    let jsonString = response.choices[0].message.content;
+
+    // Remove markdown code block syntax (more robust approach)
+    jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
+    jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
+
+    // Trim any residual whitespace that might cause parsing issues
+    jsonString = jsonString.trim();
+
+    // Parse the JSON string to an object
+    const jsonObject = JSON.parse(jsonString);
+
+    // Return the JSON object
+    return new Response(JSON.stringify(jsonObject))
  
   // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
+  // const stream = OpenAIStream(response);
   // Respond with the stream
-  return new StreamingTextResponse(stream);
+  // return new StreamingTextResponse(stream);
 }
 
 // "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein."

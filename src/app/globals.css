@@ -16,6 +16,14 @@ h1 {
   margin: 0 auto;
 }
 
+h2 {
+  color: black;
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 auto;
+}
+
 input {
   padding: 8px;
   margin: 3% auto;
