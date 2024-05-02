@@ -97,7 +97,7 @@ export default function FoodDetection() {
         // onChange={(e) => setImage(e.target.files[0])}
         /><br></br>
       <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
-      { openAIResponse !== "" ? <p>Response: {openAIResponse}</p> : null}
+      { openAIResponse !== "" ? <p>{openAIResponse}</p> : null}
       <p>{openAIResponse}</p>
     </div>
   );

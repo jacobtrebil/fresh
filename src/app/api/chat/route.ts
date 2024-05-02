@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
  
-export const dynamic = 'edge';
+// export const dynamic = 'edge';
  
 export async function POST(req: Request) {
   const { image } = await req.json();
@@ -20,10 +20,10 @@ export async function POST(req: Request) {
     max_tokens: 4096,
     messages: [
         {
-            role: 'system',
-            //@ts-ignore
+            role: 'user',
+            // @ts-ignore
             content: [
-                { type: "text", text: "What's in this image?" },
+                { type: "text", text: "You are an AI that takes an image and returns what food is in the image" },
                 {
                     type: "image_url",
                     image_url: { 
@@ -36,11 +36,13 @@ export async function POST(req: Request) {
   });
  
   // Convert the response into a friendly text-stream
+  // return response;
   const stream = OpenAIStream(response);
   // Respond with the stream
   return new StreamingTextResponse(stream);
 }
 
+// "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein."
 
 /* const createRequestMessages = async (req: any) => {
     // console.log("req = ", await req.text());
