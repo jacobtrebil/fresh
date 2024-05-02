@@ -7,7 +7,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
  
-// export const dynamic = 'edge';
+export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
   const { image } = await req.json();
@@ -36,7 +36,6 @@ export async function POST(req: Request) {
   });
  
   // Convert the response into a friendly text-stream
-  // return response;
   const stream = OpenAIStream(response);
   // Respond with the stream
   return new StreamingTextResponse(stream);
