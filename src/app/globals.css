@@ -3,9 +3,22 @@
 @tailwind utilities;
 
 .main {
-  width: 50%;
-  margin: 10% auto;
+  margin: 0 auto;
   text-align: center;
+}
+
+header {
+  padding: 0 0 1% 0;
+  border-bottom: 5px solid black;
+}
+
+header h1 {
+  background: linear-gradient(to right, #000000, #9a9a9a);
+  -webkit-background-clip: text; 
+  background-clip: text;
+  color: transparent;
+  text-align: left;
+  margin: 1% 0 0 2% !important;
 }
 
 .main h1 {
@@ -18,19 +31,61 @@
 }
 
 h1 {
-  color: black;
   font-size: 3rem;
   font-weight: 500;
   text-align: center;
-  margin: 0 auto;
 }
 
 h2 {
   color: black;
   font-size: 2rem;
   font-weight: 500;
-  text-align: center;
+  text-align: left;
   margin: 0 auto;
+}
+
+.uploadSection {
+  width: 45%;
+  margin: 5% 2%;
+  text-align: left;
+  display: inline-block;
+}
+
+.uploadSection h2 {
+  font-weight: 900;
+}
+
+.foodLog {
+  width: 50%;
+  display: inline-block;
+  float: right;
+  margin: 5% auto 0 auto;
+}
+
+.day {
+  width: 50%;
+  margin: 2% auto 0 auto;
+  border: 2.5px solid black;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.dayTitle {
+  color: black;
+  font-size: 1.5rem;
+  text-align: left;
+  font-weight: 900;
+  margin: 0;
+  padding: 5px 10px 10px 10px;
+}
+
+.day h2 {
+  font-weight: 900; 
+}
+
+.day p {
+  text-align: left;
+  padding: 5px 5px; 
 }
 
 input {
