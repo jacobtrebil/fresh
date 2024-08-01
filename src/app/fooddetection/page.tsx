@@ -1,15 +1,13 @@
 'use client';
  
-import { useCompletion } from 'ai/react';
-import React, { useState, ChangeEvent, FormEvent, useEffect, useCallback } from 'react';
-import { ReadableStreamDefaultReadResult } from 'stream/web';
-import { readStreamableValue } from 'ai/rsc';
+import React, { useState, useEffect} from 'react';
  
 export default function FoodDetection() {
-  // const {  input, handleInputChange, handleSubmit, completion, complete } = useCompletion({ api: '/api/chat' });
 
   const [image, setImage] = useState("");
   const [images, setImages] = useState([]);
+  const [file, setFile] = useState("");
+  const [files, setFiles] = useState<string[]>([]);
   const [imageCounter, setImageCounter] = useState(0);
   const [openAIResponse, setOpenAIResponse] = useState({
     food: "",
@@ -22,7 +20,8 @@ export default function FoodDetection() {
             window.alert('No image selected');
             return;
         }
-
+        
+        setFile('');
         await fetch("/api/chat", {
             method: "POST",
             headers: {
@@ -33,22 +32,7 @@ export default function FoodDetection() {
             })
         })
         .then((response) => response.json())
-        .then(response => setOpenAIResponse(response));
-        /* .then(async (response) => {
-            const reader = response.body?.getReader();
-
-            while (true) {
-                const readerResult = await reader?.read();
-                const { done, value } = readerResult as ReadableStreamDefaultReadResult<Uint8Array>;
-                // const { value } = await reader?.read();
-                if (done) {
-                    break;
-                }
-                // setOpenAIResponse((prev) => prev + new TextDecoder().decode(value));
-                var currentChunk = new TextDecoder().decode(value);
-                setOpenAIResponse((prev) => prev + currentChunk);
-            }
-        }) */
+        .then(response => setOpenAIResponse(response))
     }       
 
     function handleFileChange(e: any) {
@@ -56,7 +40,19 @@ export default function FoodDetection() {
             window.alert('No file selected');
             return;
         }
+        const numberOfFiles = e.target.files.length;
+        console.log("files = ", e.target.files);
+        console.log("number of files = ", numberOfFiles);
+        for (let i = 0; i < e.target.files.length; i++) {
+          const newFile = e.target.files[i]?.name;
+          console.log("newFile = ", newFile);
+          setFiles([...files, newFile]);
+        }
+        /* e.target.files.forEach(newFiles => {
+          Files.push(newFiles);
+        }) */
         const file = e.target.files[0];
+        setFile(file.name);
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -68,23 +64,15 @@ export default function FoodDetection() {
         }
     }
 
-    useEffect(() => {
-        console.log("imageCounter = ", imageCounter);
-    }, [imageCounter])
+  useEffect(() => {
+    console.log("Files = ", files);
+  }, [files]);
 
-    // Could just add a counter and append it to the end + add to the counter each time
+  useEffect(() => {
+    console.log("file name = ", file);
+  }, [file]);
 
   const PROMPT_TEMPLATE = 'You take an image and return a list of food items in the image.'
-
-    useEffect(() => {
-      console.log("image = ", image);
-      console.log("typeof image = ", typeof image);
-    }, [image])
-
-    useEffect(() => {
-        console.log("openAIResponse = ", openAIResponse);
-        console.log("typeof openAIResponse = ", typeof openAIResponse);
-    }, [openAIResponse])
 
   return (
     <div className="main">
@@ -93,36 +81,42 @@ export default function FoodDetection() {
       </header>
       <div className="uploadSection">
         <h2>Add Food</h2>
-        { image !== "" ?
-          <img src={image} alt="food" width="200" height="200"/>
+        { image !== "" && !openAIResponse.food ?
+            <img src={image} alt="food" width="200" height="200"/>
               :
           <p></p> 
         }
+        { !openAIResponse.food && (
+          <p>{file}</p>
+        )}
         <input 
           type="file"
           className= "text-sm border rounded -lg cursor-pointer"
           // accept="image/*"
+          multiple
           onChange={e => handleFileChange(e)}
           // onChange={(e) => setImage(e.target.files[0])}
           /><br></br>
         <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
         </div>
-          { openAIResponse?.food !== "" ? 
-          <div className="foodLog">
-            <div className="day">
-              <h2>Today</h2>
-              <p><b>Foods:</b> {openAIResponse?.food}</p>
-              <p><b>Calories:</b> {openAIResponse?.calories}</p>
-              <p><b>Protein:</b> {openAIResponse?.protein}</p>
-            </div>
-        </div> : null}
-          <div className="foodLog">
-            <div className="day">
-              <h2>Yesterday</h2>
-              <p><b>Foods:</b> Chicken, Broccoli, Potatoes, Pasta</p>
-              <p><b>Calories:</b> 2,055</p>
-              <p><b>Protein:</b> 117</p>
-            </div>
+        <div className="foodLogSection">
+            { openAIResponse?.food !== "" ? 
+            <div className="foodLog">
+              <div className="day">
+                <h2>Today</h2>
+                <p><b>Foods:</b> {openAIResponse?.food}</p>
+                <p><b>Calories:</b> {openAIResponse?.calories}</p>
+                <p><b>Protein:</b> {openAIResponse?.protein}</p>
+              </div>
+          </div> : null}
+            <div className="foodLog">
+              <div className="day">
+                <h2>Yesterday</h2>
+                <p><b>Foods:</b> Chicken, Broccoli, Potatoes, Pasta</p>
+                <p><b>Calories:</b> 2,055</p>
+                <p><b>Protein:</b> 117</p>
+              </div>
+          </div>
         </div>
     </div>
   );

@@ -55,11 +55,15 @@ h2 {
   font-weight: 900;
 }
 
-.foodLog {
-  width: 50%;
+.foodLogSection {
+  width: 50%; 
   display: inline-block;
-  float: right;
+  float: right; 
+}
+
+.foodLog {
   margin: 5% auto 0 auto;
+  vertical-align: top; 
 }
 
 .day {
