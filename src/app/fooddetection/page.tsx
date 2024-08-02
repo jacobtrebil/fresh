@@ -1,10 +1,11 @@
 'use client';
  
 import React, { useState, useEffect} from 'react';
+import Image from 'next/image';
  
 export default function FoodDetection() {
 
-  const [image, setImage] = useState("");
+  // const [image, setImage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState("");
   const [files, setFiles] = useState<string[]>([]);
@@ -15,6 +16,10 @@ export default function FoodDetection() {
     calories: "",
     protein: "",
   });
+  const [fileReadingComplete, setFileReadingComplete] = useState(false);
+  const [fileSettingComplete, setFileSettingComplete] = useState(false);
+
+  const newImages: string[] = [];
 
     async function handleSubmit() {
         if (images[0] === "") {
@@ -47,34 +52,56 @@ export default function FoodDetection() {
           newFiles.push(newFile);
           const fileName = newFile.name;
           fileNames.push(fileName);
-          readFile(newFile);
         }
         setFiles(files => [...files, ...newFiles]);
         setFileNames([...fileNames]);
+        setFileSettingComplete(true);
         /* e.target.files.forEach(newFiles => {
           Files.push(newFiles);
         }) */
-        const file = e.target.files[0];
-        setFile(file.name);
-        // readFile(file);
+        /* const file = e.target.files[0];
+        setFile(file.name); */
+        /* if (files.length > 0) {
+          for (let i = 0; i < files.length; i++) {
+            console.log("files[i] = ", files[i]);
+            readFile(files[i]);
+          }
+        } */
     }
 
   function readFile(file: any) {
-    console.log("reading file  = ", file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
         if (typeof reader.result === 'string') {
-            console.log("reader.result = ", reader.result);
-            setImages([...images, reader.result]);
+            images.push(reader.result);
+            // newImages.push(reader.result);
+            // setImages([reader.result]/* (images) => [...images, ...reader.result as string]*/);
             setImageCounter(imageCounter + 1);
         }
+        setImages([...images]);
     }
   }
 
   useEffect(() => {
+    console.log("files = ", files); 
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        console.log("files length = ", files.length);
+        console.log("files[i] = ", files[i]);
+        readFile(files[i]);
+      }
+      setFileReadingComplete(true);
+    }
+  }, [fileSettingComplete]); 
+
+  useEffect(() => {
     console.log("fileNames = ", fileNames);
   }, [fileNames]);
+
+  useEffect(() => {
+    console.log("images = ", images);
+  }, [images]);
 
   const PROMPT_TEMPLATE = 'You take an image and return a list of food items in the image.'
 
@@ -86,13 +113,13 @@ export default function FoodDetection() {
       <div className="uploadSection">
         <h2>Add Food</h2>
         <div>
-          { images.map((image, index) => (
-            <img key={index} src={image} alt="food" width="200" height="200"/>
+          { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
+            <Image key={index} src={photo} alt="food" width="200" height="200"/>
           ))}
         </div>
-        { !openAIResponse.food && (
-          <p>{file}</p>
-        )}
+        { !openAIResponse.food && files.map((file, index: any) => (
+          <p key={index}>{files[index]?.name}</p>
+        ))}
         <input 
           type="file"
           className= "text-sm border rounded -lg cursor-pointer"
