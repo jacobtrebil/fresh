@@ -55,6 +55,12 @@ h2 {
   font-weight: 900;
 }
 
+.displayImage {
+  margin: 20px 20px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
 .foodLogSection {
   width: 50%; 
   display: inline-block;

@@ -5,7 +5,6 @@ import Image from 'next/image';
  
 export default function FoodDetection() {
 
-  // const [image, setImage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState("");
   const [files, setFiles] = useState<string[]>([]);
@@ -34,7 +33,7 @@ export default function FoodDetection() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                image: images[0],
+                image: images,
             })
         })
         .then((response) => response.json())
@@ -56,17 +55,6 @@ export default function FoodDetection() {
         setFiles(files => [...files, ...newFiles]);
         setFileNames([...fileNames]);
         setFileSettingComplete(true);
-        /* e.target.files.forEach(newFiles => {
-          Files.push(newFiles);
-        }) */
-        /* const file = e.target.files[0];
-        setFile(file.name); */
-        /* if (files.length > 0) {
-          for (let i = 0; i < files.length; i++) {
-            console.log("files[i] = ", files[i]);
-            readFile(files[i]);
-          }
-        } */
     }
 
   function readFile(file: any) {
@@ -75,8 +63,6 @@ export default function FoodDetection() {
     reader.onload = () => {
         if (typeof reader.result === 'string') {
             images.push(reader.result);
-            // newImages.push(reader.result);
-            // setImages([reader.result]/* (images) => [...images, ...reader.result as string]*/);
             setImageCounter(imageCounter + 1);
         }
         setImages([...images]);
@@ -114,19 +100,14 @@ export default function FoodDetection() {
         <h2>Add Food</h2>
         <div>
           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
-            <Image key={index} src={photo} alt="food" width="200" height="200"/>
+            <Image className="displayImage" key={index} src={photo} alt="food" width="200" height="200"/>
           ))}
         </div>
-        { !openAIResponse.food && files.map((file, index: any) => (
-          <p key={index}>{files[index]?.name}</p>
-        ))}
         <input 
           type="file"
           className= "text-sm border rounded -lg cursor-pointer"
-          // accept="image/*"
           multiple
           onChange={e => handleFileChange(e)}
-          // onChange={(e) => setImage(e.target.files[0])}
           /><br></br>
         <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
         </div>
@@ -153,7 +134,28 @@ export default function FoodDetection() {
   );
 }
 
+        // newImages.push(reader.result);
+        // setImages([reader.result]/* (images) => [...images, ...reader.result as string]*/);
+        // onChange={(e) => setImage(e.target.files[0])}
+        // accept="image/*"
+
+        /* e.target.files.forEach(newFiles => {
+          Files.push(newFiles);
+        }) */
+        /* const file = e.target.files[0];
+        setFile(file.name); */
+        /* if (files.length > 0) {
+          for (let i = 0; i < files.length; i++) {
+            console.log("files[i] = ", files[i]);
+            readFile(files[i]);
+          }
+        } */
+
     /*
+
+            { !openAIResponse.food && files.map((file, index: any) => (
+          <p key={index}>{files[index]?.name}</p>
+        ))}
 
         <p>{new Date().toLocaleString()}</p>
         <div className="foodLog">
