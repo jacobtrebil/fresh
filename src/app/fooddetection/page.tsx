@@ -5,9 +5,10 @@ import React, { useState, useEffect} from 'react';
 export default function FoodDetection() {
 
   const [image, setImage] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState("");
   const [files, setFiles] = useState<string[]>([]);
+  const [fileNames, setFileNames] = useState<string[]>([]);
   const [imageCounter, setImageCounter] = useState(0);
   const [openAIResponse, setOpenAIResponse] = useState({
     food: "",
@@ -16,19 +17,19 @@ export default function FoodDetection() {
   });
 
     async function handleSubmit() {
-        if (image === "") {
+        if (images[0] === "") {
             window.alert('No image selected');
             return;
         }
         
-        setFile('');
+        console.log("submit image = ", images[0]);
         await fetch("/api/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                image: image,
+                image: images[0],
             })
         })
         .then((response) => response.json())
@@ -40,37 +41,40 @@ export default function FoodDetection() {
             window.alert('No file selected');
             return;
         }
-        const numberOfFiles = e.target.files.length;
-        console.log("files = ", e.target.files);
-        console.log("number of files = ", numberOfFiles);
+        const newFiles: string[] = [];
         for (let i = 0; i < e.target.files.length; i++) {
-          const newFile = e.target.files[i]?.name;
-          console.log("newFile = ", newFile);
-          setFiles([...files, newFile]);
+          const newFile = e.target.files[i];
+          newFiles.push(newFile);
+          const fileName = newFile.name;
+          fileNames.push(fileName);
+          readFile(newFile);
         }
+        setFiles(files => [...files, ...newFiles]);
+        setFileNames([...fileNames]);
         /* e.target.files.forEach(newFiles => {
           Files.push(newFiles);
         }) */
         const file = e.target.files[0];
         setFile(file.name);
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            if (typeof reader.result === 'string') {
-                console.log("reader.result = ", reader.result);
-                setImage(reader.result);
-                setImageCounter(imageCounter + 1);
-            }
-        }
+        // readFile(file);
     }
 
-  useEffect(() => {
-    console.log("Files = ", files);
-  }, [files]);
+  function readFile(file: any) {
+    console.log("reading file  = ", file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        if (typeof reader.result === 'string') {
+            console.log("reader.result = ", reader.result);
+            setImages([...images, reader.result]);
+            setImageCounter(imageCounter + 1);
+        }
+    }
+  }
 
   useEffect(() => {
-    console.log("file name = ", file);
-  }, [file]);
+    console.log("fileNames = ", fileNames);
+  }, [fileNames]);
 
   const PROMPT_TEMPLATE = 'You take an image and return a list of food items in the image.'
 
@@ -81,11 +85,11 @@ export default function FoodDetection() {
       </header>
       <div className="uploadSection">
         <h2>Add Food</h2>
-        { image !== "" && !openAIResponse.food ?
-            <img src={image} alt="food" width="200" height="200"/>
-              :
-          <p></p> 
-        }
+        <div>
+          { images.map((image, index) => (
+            <img key={index} src={image} alt="food" width="200" height="200"/>
+          ))}
+        </div>
         { !openAIResponse.food && (
           <p>{file}</p>
         )}
@@ -146,3 +150,7 @@ export default function FoodDetection() {
         const imageData = e.target.files[0];
         setImage(imageData);
     } */
+
+    /*         { images[0] !== "" && !openAIResponse.food ?               :
+          <p></p> 
+        }*/ 
