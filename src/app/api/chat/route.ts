@@ -9,7 +9,7 @@ const openai = new OpenAI({
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
-  const { image } = await req.json();
+  const { notes, image } = await req.json();
 
   console.log("image = ", image.length);
 
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a SINGLE json object. NEVER return a string or an array. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken and carrots, calories: 270, protein: 22 } if you're unsure of a variable, still do it and provide your best guess instead. If there are multiple images, add all the foods to the same foods variable."},
+                { type: "text", text: `You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a SINGLE json object. NEVER return a string or an array. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken and carrots, calories: 270, protein: 22 } if you're unsure of a variable, still do it and provide your best guess instead. If there are multiple images, add all the foods to the same foods variable. user notes: ${notes}`},
                 ...image.map((image: any) => (
                   {
                     type: "image_url",

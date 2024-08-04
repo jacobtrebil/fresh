@@ -17,6 +17,7 @@ export default function FoodDetection() {
   });
   const [fileReadingComplete, setFileReadingComplete] = useState(false);
   const [fileSettingComplete, setFileSettingComplete] = useState(false);
+  const [notes, setNotes] = useState("");
 
   const newImages: string[] = [];
 
@@ -33,6 +34,7 @@ export default function FoodDetection() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                notes: notes,
                 image: images,
             })
         })
@@ -113,6 +115,7 @@ export default function FoodDetection() {
             type="text"
             className="notes"
             placeholder="Add Notes or Nutritional Values..."
+            onChange={(e) => setNotes(e.target.value)}
           /><br></br>
         <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
         </div>
