@@ -105,9 +105,14 @@ export default function FoodDetection() {
         </div>
         <input 
           type="file"
-          className= "text-sm border rounded -lg cursor-pointer"
+          className= "uploadFiles"
           multiple
           onChange={e => handleFileChange(e)}
+        /><br></br>
+          <input 
+            type="text"
+            className="notes"
+            placeholder="Add Notes or Nutritional Values..."
           /><br></br>
         <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
         </div>
@@ -133,6 +138,8 @@ export default function FoodDetection() {
     </div>
   );
 }
+
+// <p className="notesTitle">Add Notes or Nutritional Values</p>
 
         // newImages.push(reader.result);
         // setImages([reader.result]/* (images) => [...images, ...reader.result as string]*/);

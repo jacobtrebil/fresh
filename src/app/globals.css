@@ -46,7 +46,7 @@ h2 {
 
 .uploadSection {
   width: 45%;
-  margin: 5% 2%;
+  margin: 5% 2% 2% 2%;
   text-align: left;
   display: inline-block;
 }
@@ -60,6 +60,31 @@ h2 {
   display: inline-block;
   border-radius: 4px;
 }
+
+.uploadFiles {
+  margin: 20px auto;
+  display: inline-block;
+}
+
+.notes {
+  padding: 10px 10px 50px 10px;
+  width: 53%;
+  text-align: left;
+  display: inline-block;
+  color: black;
+  margin: 0px auto 20px auto !important;
+}
+
+.notes::placeholder {
+  color: gray;
+  font-size: 0.9rem;
+}
+
+/* .notesTitle {
+  font-weight: 500;
+  text-align: left;
+  margin: 0 0 0 0;
+} */
 
 .foodLogSection {
   width: 50%; 
