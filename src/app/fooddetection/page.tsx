@@ -2,6 +2,7 @@
  
 import React, { useState, useEffect} from 'react';
 import Image from 'next/image';
+import { connect } from 'http2';
  
 export default function FoodDetection() {
 
@@ -19,6 +20,66 @@ export default function FoodDetection() {
   const [fileSettingComplete, setFileSettingComplete] = useState(false);
   const [notes, setNotes] = useState("");
 
+  const [deviceName, setDeviceName] = useState(""); 
+  const [deviceConnectionError, setDeviceConnectionError] = useState("");
+ 
+  /* useEffect(() => {
+    scanForBLEDevices();
+  }, []) */ 
+
+  const scanForBLEDevices = async () => {
+    try {
+      console.log("Starting BLE connection process...");
+      
+      if (!navigator.bluetooth) {
+        console.error("Web Bluetooth API is not available in your browser!");
+        setDeviceConnectionError("Web Bluetooth API is not available in your browser!");
+        return;
+      }
+
+      const options = {
+        filters: [
+          { services: ['battery_service'] },  // Example: Look for devices with battery service
+          { namePrefix: 'BLE' },              // Example: Look for devices with names starting with 'BLE'
+          // Add more filters as needed
+        ],
+        optionalServices: ['device_information']  // Example: Additional services you might want to interact with
+      };
+  
+      console.log("Requesting Bluetooth Device...");
+      const device = await navigator.bluetooth.requestDevice(options);
+  
+      console.log("Device selected:", device);
+      if (!device) {
+        console.error("No device selected!");
+        setDeviceConnectionError("No device selected!");
+        return;
+      }
+  
+      console.log("Device name:", device.name);
+      setDeviceName(device.name || 'Unnamed device');
+  
+      console.log("Connecting to GATT Server...");
+      const server = await device.gatt?.connect();
+      
+      if (!server) {
+        console.error("Failed to connect to GATT server!");
+        setDeviceConnectionError("Failed to connect to GATT server!");
+        return;
+      }
+  
+      console.log("Connected to GATT Server");
+  
+      // Clear any previous errors
+      setDeviceConnectionError("");
+  
+      console.log('Successfully connected to device:', device.name);
+    } catch (err: any) {
+      console.error('Error in BLE connection process:', err);
+      setDeviceConnectionError(err.message);
+    }
+  };
+
   const newImages: string[] = [];
 
     async function handleSubmit() {
@@ -26,8 +87,7 @@ export default function FoodDetection() {
             window.alert('No image selected');
             return;
         }
-        
-        console.log("submit image = ", images[0]);
+
         await fetch("/api/chat", {
             method: "POST",
             headers: {
@@ -72,7 +132,6 @@ export default function FoodDetection() {
   }
 
   useEffect(() => {
-    console.log("files = ", files); 
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
         console.log("files length = ", files.length);
@@ -83,13 +142,13 @@ export default function FoodDetection() {
     }
   }, [fileSettingComplete]); 
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log("fileNames = ", fileNames);
   }, [fileNames]);
 
   useEffect(() => {
     console.log("images = ", images);
-  }, [images]);
+  }, [images]); */
 
   const PROMPT_TEMPLATE = 'You take an image and return a list of food items in the image.'
 
@@ -99,6 +158,7 @@ export default function FoodDetection() {
         <h1 style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
       </header>
       <div className="uploadSection">
+        <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
         <h2>Add Food</h2>
         <div>
           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
