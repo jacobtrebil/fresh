@@ -159,6 +159,9 @@ export default function FoodDetection() {
       </header>
       <div className="uploadSection">
         <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
+        { deviceName && (
+          <p>Connected to {deviceName}</p>
+        )}
         <h2>Add Food</h2>
         <div>
           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
