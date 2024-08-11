@@ -22,6 +22,7 @@ export default function FoodDetection() {
 
   const [deviceName, setDeviceName] = useState(""); 
   const [deviceConnectionError, setDeviceConnectionError] = useState("");
+  const [services, setServices] = useState<any[]>([]);
  
   /* useEffect(() => {
     scanForBLEDevices();
@@ -39,16 +40,24 @@ export default function FoodDetection() {
 
       const options = {
         filters: [
-          { services: ['battery_service'] },  // Example: Look for devices with battery service
+          { services: [ 'battery_service' /* '19B10000-E8F2-537E-4F6C-D104768A1214' 'battery_service'*/ ]},  // Example: Look for devices with battery service
           { namePrefix: 'BLE' },              // Example: Look for devices with names starting with 'BLE'
           // Add more filters as needed
         ],
-        optionalServices: ['device_information']  // Example: Additional services you might want to interact with
+        optionalServices: [
+          '19b10000-e8f2-537e-4f6c-d104768a1214',  // Custom Main Friend Service
+          '0000180f-0000-1000-8000-00805f9b34fb',  // Battery Service
+          '0000180a-0000-1000-8000-00805f9b34fb'   // Device Information Service
+        ]
+        /* optionalServices: ['19B10000-E8F2-537E-4F6C-D104768A1214',  // Main Friend Service
+        '19B10005-E8F2-537E-4F6C-D104768A1214',  // Photo Data
+        '19B10006-E8F2-537E-4F6C-D104768A1214',  // Photo Control
+        '180a'] */  // Example: Additional services you might want to interact with
       };
   
       console.log("Requesting Bluetooth Device...");
       const device = await navigator.bluetooth.requestDevice(options);
-  
+
       console.log("Device selected:", device);
       if (!device) {
         console.error("No device selected!");
@@ -61,24 +70,76 @@ export default function FoodDetection() {
   
       console.log("Connecting to GATT Server...");
       const server = await device.gatt?.connect();
+      console.log("GATT Server:", server);
       
       if (!server) {
         console.error("Failed to connect to GATT server!");
         setDeviceConnectionError("Failed to connect to GATT server!");
         return;
       }
+
+      console.log("Getting Main Friend Service...");
+    // Try to access the custom service
+    const customServiceUUID = '19b10000-e8f2-537e-4f6c-d104768a1214';
+    let customService;
+
+    // Method 1: Direct access
+    try {
+      console.log("Attempting direct access to custom service...");
+      customService = await server.getPrimaryService(customServiceUUID);
+      console.log("Custom service found via direct access");
+    } catch (error) {
+      console.log("Direct access failed:", error);
+    }
+
+    // Method 2: Discover all services and filter
+    if (!customService) {
+      console.log("Attempting to discover all services...");
+      const services = await server.getPrimaryServices();
+      customService = services.find((service: { uuid: string; }) => service.uuid.toLowerCase() === customServiceUUID);
+      if (customService) {
+        console.log("Custom service found via discovery");
+      }
+    }
+
+      /* const mainService = await server.getPrimaryService('19B10000-E8F2-537E-4F6C-D104768A1214');
+      console.log("Main Friend Service:", mainService);
   
-      console.log("Connected to GATT Server");
+      if (mainService) {
+        console.log("Main Friend Service found. Checking for photo characteristics...");
+        const photoDataChar = await mainService.getCharacteristic('19B10005-E8F2-537E-4F6C-D104768A1214');
+        const photoControlChar = await mainService.getCharacteristic('19B10006-E8F2-537E-4F6C-D104768A1214');
+  
+        if (photoDataChar && photoControlChar) {
+          console.log("Photo service characteristics found!");
+          // Here you can set up handlers for the photo service
+        } else {
+          console.log("Photo service characteristics not found.");
+        }
+      } else {
+        console.log("Main Friend Service not found.");
+      } */
   
       // Clear any previous errors
       setDeviceConnectionError("");
   
       console.log('Successfully connected to device:', device.name);
+
+      const services = await server.getPrimaryServices();
+      services.forEach((service: { uuid: any; }) => {
+        console.log('Service found:', service.uuid);
+      });
+      setServices(services);
+
     } catch (err: any) {
       console.error('Error in BLE connection process:', err);
       setDeviceConnectionError(err.message);
     }
   };
+
+  useEffect(() => {
+    console.log("services = ", services);
+  }, [services]);
 
   const newImages: string[] = [];
 
