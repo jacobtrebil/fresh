@@ -162,7 +162,7 @@ export default function FoodDetection() {
           <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
         )}
         { deviceName && (
-          <p>Connected to {deviceName}</p>
+          <p className="connection">Connected to {deviceName}</p>
         )}
         <h2>Add Food</h2>
         <div>
