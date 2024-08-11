@@ -158,7 +158,9 @@ export default function FoodDetection() {
         <h1 style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
       </header>
       <div className="uploadSection">
-        <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
+        { !deviceName && (
+          <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
+        )}
         { deviceName && (
           <p>Connected to {deviceName}</p>
         )}
