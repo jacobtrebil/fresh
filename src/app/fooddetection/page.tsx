@@ -88,6 +88,13 @@ export default function FoodDetection() {
       console.log("Attempting direct access to custom service...");
       customService = await server.getPrimaryService(customServiceUUID);
       console.log("Custom service found via direct access");
+
+      // Access characteristics
+      const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
+      const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
+      
+      console.log("Photo Data Characteristic:", photoDataChar);
+      console.log("Photo Control Characteristic:", photoControlChar);
     } catch (error) {
       console.log("Direct access failed:", error);
     }
