@@ -37,6 +37,12 @@ header h1 {
   font-size: 1.25rem;
 }
 
+.batteryPercentage {
+  color: black;
+  padding: 0px 0px 40px 0px;
+  font-size: 1rem;
+}
+
 .main h1 {
   background: linear-gradient(to right, #000000, #9a9a9a);
   -webkit-background-clip: text; 

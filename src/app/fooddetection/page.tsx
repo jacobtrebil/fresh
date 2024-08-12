@@ -23,10 +23,62 @@ export default function FoodDetection() {
   const [deviceName, setDeviceName] = useState(""); 
   const [deviceConnectionError, setDeviceConnectionError] = useState("");
   const [services, setServices] = useState<any[]>([]);
+  const [batteryLevel, setBatteryLevel] = useState("");
  
   /* useEffect(() => {
     scanForBLEDevices();
   }, []) */ 
+
+  const handlePhotoData = async (photoDataChar) => {
+    try {
+      console.log("Setting up notifications for Photo Data Characteristic...");
+  
+      // Check if notifications are supported
+      if (!photoDataChar.properties.notify) {
+        console.error("Notifications not supported for this characteristic");
+        return;
+      }
+  
+      // Start notifications
+      await photoDataChar.startNotifications();
+      console.log("Notifications started successfully");
+  
+      // Attempt to read the current value
+      const initialValue = await photoDataChar.readValue();
+      console.log("Initial characteristic value:", new Uint8Array(initialValue.buffer));
+  
+      // Set up the event listener for characteristic value changes
+      photoDataChar.addEventListener('characteristicvaluechanged', (event) => {
+        console.log("Characteristic value changed event triggered");
+        const value = event.target.value;
+        
+        // Process the received data
+        const photoData = new Uint8Array(value.buffer);
+        console.log("Received photo data:", photoData);
+  
+        // Example: Convert data to a base64 string if it's image data
+        const base64Data = btoa(String.fromCharCode.apply(null, photoData));
+        console.log("Photo data as base64:", base64Data);
+  
+        // TODO: Add your specific data processing logic here
+      });
+  
+      console.log("Event listener set up successfully");
+  
+      // Set up an interval to check if we're still receiving data
+      setInterval(async () => {
+        try {
+          const value = await photoDataChar.readValue();
+          console.log("Periodic check - Current value:", new Uint8Array(value.buffer));
+        } catch (error) {
+          console.error("Error reading characteristic value:", error);
+        }
+      }, 10000); // Check every 10 seconds
+  
+    } catch (error) {
+      console.error("Error setting up photo data notifications:", error);
+    }
+  };
 
   const scanForBLEDevices = async () => {
     try {
@@ -81,17 +133,40 @@ export default function FoodDetection() {
       console.log("Getting Main Friend Service...");
     // Try to access the custom service
     const customServiceUUID = '19b10000-e8f2-537e-4f6c-d104768a1214';
+    const batteryServiceUUID = '0000180f-0000-1000-8000-00805f9b34fb';
     let customService;
+    let batteryService;
 
     // Method 1: Direct access
     try {
+      batteryService = await server.getPrimaryService(batteryServiceUUID);
+      console.log("batteryService: ", batteryService);
       console.log("Attempting direct access to custom service...");
       customService = await server.getPrimaryService(customServiceUUID);
       console.log("Custom service found via direct access");
 
+      // Battery Level characteristic UUID
+      const batteryLevelCharUUID = '00002a19-0000-1000-8000-00805f9b34fb';
+    
+      // Get the Battery Level characteristic
+      const batteryLevelChar = await batteryService.getCharacteristic(batteryLevelCharUUID);
+    
+      // Read the battery level value
+      const batteryLevelData = await batteryLevelChar.readValue();
+    
+      // The battery level is typically a single byte value (0-100)
+      const batteryLevel = batteryLevelData.getUint8(0);
+
+      setBatteryLevel(batteryLevel);
+    
+      console.log(`Battery Level: ${batteryLevel}%`);
+
       // Access characteristics
       const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
       const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
+
+      console.log("Photo Data Characteristic properties:", photoDataChar.properties);
+      await handlePhotoData(photoDataChar);
       
       console.log("Photo Data Characteristic:", photoDataChar);
       console.log("Photo Control Characteristic:", photoControlChar);
@@ -230,7 +305,10 @@ export default function FoodDetection() {
           <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
         )}
         { deviceName && (
-          <p className="connection">Connected to {deviceName}</p>
+          <div>
+            <p className="connection">Connected to {deviceName}</p>
+            <p className="batteryPercentage">Battery Level: {batteryLevel}%</p>
+          </div>
         )}
         <h2>Add Food</h2>
         <div>
