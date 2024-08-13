@@ -29,7 +29,7 @@ export default function FoodDetection() {
     scanForBLEDevices();
   }, []) */ 
 
-  const handlePhotoData = async (photoDataChar) => {
+  /* const handlePhotoData = async (photoDataChar) => {
     try {
       console.log("Setting up notifications for Photo Data Characteristic...");
   
@@ -78,7 +78,7 @@ export default function FoodDetection() {
     } catch (error) {
       console.error("Error setting up photo data notifications:", error);
     }
-  };
+  }; */
 
   const scanForBLEDevices = async () => {
     try {
@@ -141,10 +141,11 @@ export default function FoodDetection() {
     try {
       batteryService = await server.getPrimaryService(batteryServiceUUID);
       console.log("batteryService: ", batteryService);
+    
       console.log("Attempting direct access to custom service...");
       customService = await server.getPrimaryService(customServiceUUID);
       console.log("Custom service found via direct access");
-
+    
       // Battery Level characteristic UUID
       const batteryLevelCharUUID = '00002a19-0000-1000-8000-00805f9b34fb';
     
@@ -156,22 +157,31 @@ export default function FoodDetection() {
     
       // The battery level is typically a single byte value (0-100)
       const batteryLevel = batteryLevelData.getUint8(0);
-
+    
       setBatteryLevel(batteryLevel);
     
       console.log(`Battery Level: ${batteryLevel}%`);
-
-      // Access characteristics
-      const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
-      const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
-
-      console.log("Photo Data Characteristic properties:", photoDataChar.properties);
-      await handlePhotoData(photoDataChar);
+    
+      /* console.log("Photo Data Characteristic:", photoDataChar);
+      console.log("Photo Control Characteristic:", photoControlChar); */
+    } catch (error: any) {
+      console.error("Error details:");
+      console.error("Name:", error.name);
+      console.error("Message:", error.message);
+      console.error("Stack:", error.stack);
       
-      console.log("Photo Data Characteristic:", photoDataChar);
-      console.log("Photo Control Characteristic:", photoControlChar);
-    } catch (error) {
-      console.log("Direct access failed:", error);
+      if (error instanceof DOMException) {
+        console.error("DOMException code:", error.code);
+      }
+      
+      // Optionally, you can add specific error handling based on the error type
+      if (error.name === "NotFoundError") {
+        console.error("A required service or characteristic was not found.");
+      } else if (error.name === "SecurityError") {
+        console.error("The operation is not permitted in the current security context.");
+      } else if (error.name === "NotSupportedError") {
+        console.error("The operation is not supported by the device or browser.");
+      }
     }
 
     // Method 2: Discover all services and filter
@@ -212,12 +222,124 @@ export default function FoodDetection() {
         console.log('Service found:', service.uuid);
       });
       setServices(services);
+      triggerCapture(customService);
+
 
     } catch (err: any) {
       console.error('Error in BLE connection process:', err);
       setDeviceConnectionError(err.message);
     }
   };
+
+  async function triggerCapture(customService: any) { 
+    try {
+          // Access characteristics
+          const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
+          const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
+        
+          console.log("Photo Data Characteristic properties:", photoDataChar.properties);
+          
+          await triggerPhotoCaptureNew(photoControlChar);
+          await handlePhotoData(photoDataChar, photoControlChar);
+    } catch (err) {
+      console.error("Error: ", err);
+    }
+  }
+
+  async function triggerPhotoCaptureNew(photoControlCharacteristic: any) {
+    try {
+      // Write a null value to the characteristic
+      await photoControlCharacteristic.writeValue(new ArrayBuffer(10));
+      console.log("Photo capture triggered successfully");
+    } catch (error) {
+      console.error("Error triggering photo capture:", error);
+    }
+  }
+
+  const handlePhotoData = async (photoDataChar: any, photoControlChar: any) => {
+    console.log("getting handlePhotoData");
+    let captureState = 'idle';
+    let accumulatedData = new Uint8Array();
+  
+    const triggerPhotoCapture = async () => {
+      console.log("Triggering photo capture...");
+      captureState = 'capturing';
+      try {
+        // Assuming 1 means "start capture". Adjust based on device specifications.
+        await photoControlChar.writeValue(new Uint8Array([1]));
+        console.log("Photo capture triggered");
+      } catch (error) {
+        console.error("Error triggering photo capture:", error);
+        captureState = 'idle';
+      }
+    };
+  
+    const readPhotoControlChar = async () => {
+      try {
+        const value = await photoControlChar.readValue();
+        console.log("Photo Control Characteristic value:", new Uint8Array(value.buffer));
+      } catch (error) {
+        console.error("Error reading Photo Control Characteristic:", error);
+      }
+    };
+  
+    // Set up notifications for Photo Data Characteristic
+    await photoDataChar.startNotifications();
+    console.log("getting past await");
+    photoDataChar.addEventListener('characteristicvaluechanged', (event) => {
+      console.log("Photo Data Characteristic value changed");
+      const value = new Uint8Array(event.target.value.buffer);
+      console.log("Received data:", value);
+      
+      if (value.length > 0) {
+        accumulatedData = new Uint8Array([...accumulatedData, ...value.slice(2)]);
+        console.log("Accumulated data length:", accumulatedData.length);
+        if (isPhotoComplete(accumulatedData)) {
+          console.log("Photo capture complete");
+          processPhoto(accumulatedData);
+          accumulatedData = new Uint8Array();
+          captureState = 'idle';
+        }
+      } else {
+        console.log("Received empty data packet");
+      }
+    });
+  
+    // Set up notifications for Photo Control Characteristic
+    /* await photoControlChar.startNotifications();
+    console.log("getting past await 2");
+    photoControlChar.addEventListener('characteristicvaluechanged', (event) => {
+      console.log("Photo Control Characteristic value changed");
+      const value = new Uint8Array(event.target.value.buffer);
+      console.log("Control data:", value);
+      // Interpret control data and update state as needed
+    }); */
+  
+    // Periodic check and trigger
+    /* setInterval(async () => {
+      if (captureState === 'idle') {
+        await readPhotoControlChar();
+        await triggerPhotoCapture();
+      }
+    }, 10000); // Check every 10 seconds */
+  
+    console.log("Photo capture handler set up");
+  }; 
+  
+  // Helper function to check if we've received a complete photo
+  // Adjust this based on your device's protocol
+  const isPhotoComplete = (data) => {
+    // Example: Check for JPEG end marker
+    return data.length > 2 && data[data.length - 2] === 0xFF && data[data.length - 1] === 0xD9;
+  };
+  
+  // Process the complete photo data
+  const processPhoto = (data) => {
+    const base64Data = btoa(String.fromCharCode.apply(null, data));
+    console.log("Complete photo data (base64):", base64Data);
+    // TODO: Display or further process the photo
+  };
+
 
   useEffect(() => {
     console.log("services = ", services);

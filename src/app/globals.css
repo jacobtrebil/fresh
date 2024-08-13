@@ -13,12 +13,16 @@ header {
 }
 
 header h1 {
-  background: linear-gradient(to right, #000000, #9a9a9a);
+  background: linear-gradient(to right, #000000, #000000, #9a9a9a);
   -webkit-background-clip: text; 
   background-clip: text;
   color: transparent;
   text-align: left;
   margin: 1% 0 0 2% !important;
+}
+
+.freshHeadline { 
+  margin: 5% 0 5% 0 !important; 
 }
 
 .scan {
