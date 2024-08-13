@@ -71,7 +71,7 @@ h2 {
 }
 
 .uploadSection {
-  width: 45%;
+  width: 55%;
   margin: 5% 2% 2% 2%;
   text-align: left;
   display: inline-block;
@@ -82,7 +82,7 @@ h2 {
 }
 
 .displayImage {
-  margin: 20px 20px;
+  margin: 10px 10px;
   display: inline-block;
   border-radius: 4px;
 }
@@ -113,7 +113,7 @@ h2 {
 } */
 
 .foodLogSection {
-  width: 50%; 
+  width: 40%; 
   display: inline-block;
   float: right; 
 }
@@ -124,7 +124,7 @@ h2 {
 }
 
 .day {
-  width: 50%;
+  width: 75%;
   margin: 2% auto 0 auto;
   border: 2.5px solid black;
   border-radius: 16px;
