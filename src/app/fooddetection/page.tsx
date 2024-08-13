@@ -25,6 +25,9 @@ export default function FoodDetection() {
   const [services, setServices] = useState<any[]>([]);
   const [batteryLevel, setBatteryLevel] = useState("");
   const [base64Img, setBase64Img] = useState("");
+
+  const [base64Images, setBase64Images] = useState<string[]>([]);
+  const [base64ImagesSet, setBase64ImagesSet] = useState(false);
  
   /* useEffect(() => {
     scanForBLEDevices();
@@ -234,14 +237,14 @@ export default function FoodDetection() {
 
   async function triggerCapture(customService: any) { 
     try {
-          // Access characteristics
-          const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
-          const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
+      // Access characteristics
+      const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
+      const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
         
-          console.log("Photo Data Characteristic properties:", photoDataChar.properties);
+      console.log("Photo Data Characteristic properties:", photoDataChar.properties);
           
-          await triggerPhotoCaptureNew(photoControlChar);
-          await handlePhotoData(photoDataChar, photoControlChar);
+      await triggerPhotoCaptureNew(photoControlChar);
+      await handlePhotoData(photoDataChar, photoControlChar);
     } catch (err) {
       console.error("Error: ", err);
     }
@@ -300,6 +303,7 @@ export default function FoodDetection() {
           processPhoto(accumulatedData);
           accumulatedData = new Uint8Array();
           captureState = 'idle';
+          setBase64ImagesSet(true);
         }
       } else {
         console.log("Received empty data packet");
@@ -339,9 +343,14 @@ export default function FoodDetection() {
     const base64Data = btoa(String.fromCharCode.apply(null, data));
     console.log("Complete photo data (base64):", base64Data);
     setBase64Img(base64Data);
+    base64Images.push(base64Data);
+    setBase64Images([...base64Images]);
     // TODO: Display or further process the photo
   };
 
+  useEffect(() => {
+    console.log("base64Images = ", base64Images);
+  }, [base64Images]);
 
   useEffect(() => {
     console.log("services = ", services);
@@ -435,9 +444,9 @@ export default function FoodDetection() {
           </div>
         )}
         <h2>Add Food</h2>
-        { base64Img && (
-          <Image src={`data:image/jpeg;base64,${base64Img}`} alt="food" width="200" height="200"/>
-        )}
+        { base64Images.length > 0 && base64ImagesSet && base64Images.map((base64image, index: any) => (
+          <Image key={index} src={`data:image/jpeg;base64,${base64image}`} alt="food" width="200" height="200"/>
+        ))}
         <div>
           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
             <Image className="displayImage" key={index} src={photo} alt="food" width="200" height="200"/>
