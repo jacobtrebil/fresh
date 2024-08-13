@@ -24,6 +24,7 @@ export default function FoodDetection() {
   const [deviceConnectionError, setDeviceConnectionError] = useState("");
   const [services, setServices] = useState<any[]>([]);
   const [batteryLevel, setBatteryLevel] = useState("");
+  const [base64Img, setBase64Img] = useState("");
  
   /* useEffect(() => {
     scanForBLEDevices();
@@ -337,6 +338,7 @@ export default function FoodDetection() {
   const processPhoto = (data) => {
     const base64Data = btoa(String.fromCharCode.apply(null, data));
     console.log("Complete photo data (base64):", base64Data);
+    setBase64Img(base64Data);
     // TODO: Display or further process the photo
   };
 
@@ -433,6 +435,9 @@ export default function FoodDetection() {
           </div>
         )}
         <h2>Add Food</h2>
+        { base64Img && (
+          <Image src={`data:image/jpeg;base64,${base64Img}`} alt="food" width="200" height="200"/>
+        )}
         <div>
           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
             <Image className="displayImage" key={index} src={photo} alt="food" width="200" height="200"/>
