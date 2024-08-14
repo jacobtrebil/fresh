@@ -475,12 +475,12 @@ export default function FoodDetection() {
         { deviceName && (
           <div className="headerRight">
             <p className="connection">Connected to {deviceName}</p>
-            <p className="batteryPercentage">Battery: {batteryLevel}%</p>
+            <p className="batteryPercentage">Battery: <b>{batteryLevel}%</b></p>
           </div>
         )}
       </header>
       <div className="uploadSection">
-        <h2>Wearable Images</h2>
+        <h2>Live Photo Stream</h2>
         <div>
         { base64Images.length > 0 && base64ImagesSet && base64Images.map((base64image, index: any) => (
           <Image className="displayImage" key={index} src={`data:image/jpeg;base64,${base64image}`} alt="food" width="200" height="200"/>
@@ -492,7 +492,7 @@ export default function FoodDetection() {
             placeholder="Add Notes or Nutritional Values..."
             onChange={(e) => setNotes(e.target.value)}
           /><br></br>
-        <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
+        <button type="submit" className="button" onClick={handleSubmit}>Process</button>
         </div>
         <div className="foodLogSection">
           <div>
