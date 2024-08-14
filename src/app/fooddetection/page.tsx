@@ -7,6 +7,7 @@ import icon from "../../../public/icon.png";
 import pepper from "../../../public/pepper.png";
 import grapes from "../../../public/grapes.png";
 import veggies from "../../../public/veggies.png";
+import pal from "../../../public/pal.png";
 import { AIStreamParser } from 'ai';
  
 export default function FoodDetection() {
@@ -464,8 +465,8 @@ export default function FoodDetection() {
     <div className="main">
       <header>
         <div className="logoSection">
-          <h1 className="logo" style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
-          <Image className="icon" src={veggies} alt="icon" width={75} />
+          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Pal</h1>
+          <Image className="icon" src={pal} alt="icon" width={50} />
         </div>
         { !deviceName && (
           <div className="headerRight">
@@ -486,25 +487,27 @@ export default function FoodDetection() {
           <Image className="displayImage" key={index} src={`data:image/jpeg;base64,${base64image}`} alt="food" width="200" height="200"/>
         ))}
         </div>
-          <input 
+        </div>
+          <div className="contextSection">
+            <h2 className="aiAnalysis">Understanding</h2>
+            { newOpenAIResponse && (
+            <p>{newOpenAIResponse}</p>
+            )}
+          </div>
+    </div>
+  );
+}
+
+/*           <input 
             type="text"
             className="notes"
             placeholder="Add Notes or Nutritional Values..."
             onChange={(e) => setNotes(e.target.value)}
           /><br></br>
         <button type="submit" className="button" onClick={handleSubmit}>Process</button>
-        </div>
-        <div className="foodLogSection">
-          <div>
-            <p className="aiAnalysis">AI Analysis</p>
-            { newOpenAIResponse && (
-            <p>{newOpenAIResponse}</p>
-            )}
-          </div>
-        </div>
-    </div>
-  );
-}
+        
+                <div className="foodLogSection">
+                </div>*/
 
 /*         { !deviceName && (
           <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>

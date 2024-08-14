@@ -43,7 +43,7 @@ header h1 {
 
 .logo {
   text-align: left;
-  margin: 15px 0 0 20px !important;
+  margin: 15px 10px 0 20px !important;
   display: inline-block;
   color: black !important;
 }
@@ -51,7 +51,8 @@ header h1 {
 .icon {
   display: inline-block;
   vertical-align: top;
-  margin: 12px 0 0 10px;
+  margin: 26px 0 0 10px;
+  border-radius: 9999px;
 }
 
 .headerRight {
@@ -99,13 +100,23 @@ h2 {
 
 .uploadSection {
   width: 55%;
-  margin: 5% 2% 2% 2%;
+  margin: 2.5% 2% 2% 2%;
   text-align: left;
   display: inline-block;
 }
 
+.contextSection {
+  vertical-align: top;
+  margin: 2.5% 40px 0 0;
+  border-radius: 16px;
+  width: 35%; 
+  display: inline-block;
+  float: right; 
+}
+
 .uploadSection h2 {
   font-weight: 900;
+  margin: 20px 0 20px 10px;
 }
 
 .displayImage {
@@ -140,8 +151,9 @@ h2 {
 } */
 
 .aiAnalysis {
-  margin: 5% auto 2% auto !important;
-  font-size: 1.25rem;
+  margin: 20px 0 10% 40px !important;
+  text-align: left;
+  font-weight: 900;
 }
 
 .foodLogSection {
