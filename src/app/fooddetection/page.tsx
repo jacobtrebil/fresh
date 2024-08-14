@@ -35,6 +35,7 @@ export default function FoodDetection() {
 
   const [base64Images, setBase64Images] = useState<string[]>([]);
   const [base64ImagesSet, setBase64ImagesSet] = useState(false);
+  const [isFirstImageSkipped, setIsFirstImageSkipped] = useState(false);
 
   function parseOpenAIStream() : AIStreamParser {
     let previous = '';
@@ -302,6 +303,8 @@ export default function FoodDetection() {
         console.error("Error reading Photo Control Characteristic:", error);
       }
     };
+
+    let isFirstPhoto = true;
   
     // Set up notifications for Photo Data Characteristic
     await photoDataChar.startNotifications();
@@ -312,7 +315,14 @@ export default function FoodDetection() {
         accumulatedData = new Uint8Array([...accumulatedData, ...value.slice(2)]);
         if (isPhotoComplete(accumulatedData)) {
           console.log("Photo capture complete");
-          processPhoto(accumulatedData);
+          if (isFirstPhoto) {
+            console.log("Skipping first photo");
+            isFirstPhoto = false;
+          } else {
+            console.log("Photo capture complete");
+            processPhoto(accumulatedData);
+          }
+          // processPhoto(accumulatedData);
           accumulatedData = new Uint8Array();
           captureState = 'idle';
           setBase64ImagesSet(true);
@@ -353,12 +363,14 @@ export default function FoodDetection() {
   // Process the complete photo data
   const processPhoto = (data) => {
     const base64Data = btoa(String.fromCharCode.apply(null, data));
+    console.log("Photo data as base64:", base64Data);
     setBase64Img(base64Data);
     base64Images.push(base64Data);
+    // base64Images.push(base64Data);
     if (base64Images.length > 9) {
       base64Images.shift();
     }
-    setBase64Images([...base64Images]);
+      setBase64Images([...base64Images]);
     // TODO: Display or further process the photo
   };
 
