@@ -478,6 +478,9 @@ export default function FoodDetection() {
       <div className="uploadSection">
         <h2>Live Photo Stream</h2>
         <div>
+        { base64ImagesSet && base64Images.length === 0 && (
+          <p className="loadingMessage">First photo takes 10-15 seconds...</p>
+        )}
         { base64Images.length > 0 && base64ImagesSet && base64Images.map((base64image, index: any) => (
           <Image className="displayImage" key={index} src={`data:image/jpeg;base64,${base64image}`} alt="food" width="200" height="200"/>
         ))}
@@ -485,6 +488,9 @@ export default function FoodDetection() {
         </div>
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
+            { base64Images.length > 0 && base64Images.length < 4 && !newOpenAIResponse && (
+              <p className="aiLoadingMessage">AI will analyze your photos once 3 stream in...</p>
+            )}
             { newOpenAIResponse && (
             <p className="understandingText">{newOpenAIResponse}</p>
             )}
