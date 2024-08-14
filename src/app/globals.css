@@ -410,3 +410,31 @@ input {
 .chatLogoSection {
   text-align: center;
 }
+
+.userMessage {
+  background: #F4F4F4;
+  color: black;
+  border-top-right-radius: 32px;
+  border-top-left-radius: 32px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 4px;
+  padding: 10px 20px;
+  margin: 10px 0;
+  display: inline-block;
+  float: right;
+  font-size: 1rem;
+}
+
+.aiMessage {
+  background: white;
+  width: 100% !important;
+  border-top-right-radius: 32px;
+  border-top-left-radius: 32px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 32px;
+  padding: 20px 30px;
+  margin: 10px 0;
+  display: inline-block;
+  max-width: none;
+  font-size: 1rem;
+}

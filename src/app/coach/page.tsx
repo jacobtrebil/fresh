@@ -23,9 +23,15 @@ export default function Page() {
         </div>
         <div className="messagesSection">
             {messages.map(message => (
-                <div key={message.id}>
-                {message.role === 'user' ? 'User: ' : 'AI: '}
-                {message.content}
+                <div 
+                    key={message.id}
+                    className={`max-w-md p-4 rounded-lg ${
+                    message.role === 'user'
+                    ? 'userMessage bg-blue-500 text-white self-end'
+                    : 'aiMessage'
+                    }`}
+                >
+                    <p className="break-words">{message.content}</p>
                 </div>
             ))}
         </div>
@@ -45,4 +51,5 @@ export default function Page() {
   );
 }
 
-/*             <button type="submit">Submit</button> */ 
+/*             <button type="submit">Submit</button>
+               {message.role === 'user' ? 'User: ' : 'AI: '} */ 

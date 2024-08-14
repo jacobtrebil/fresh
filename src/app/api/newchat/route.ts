@@ -1,6 +1,7 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 // import OpenAI from 'openai';
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
+import contextPrompt from '../../../../context.js';
  
 // Create an OpenAI API client (that's edge friendly!)
 /* const openai = new OpenAI({
@@ -21,6 +22,10 @@ export async function POST(req: Request) {
   })
   const openai = new OpenAIApi(config)
 
+  const newPrompt = contextPrompt(request.messages[0]?.content);
+
+  console.log("newPrompt = ", newPrompt);
+
   const prompt = `You are an AI that gives health advice. Accept a question and respond with health coach advice. 
   user question: ${request.messages[0]?.content}`;
 
@@ -33,7 +38,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: prompt},
+                { type: "text", text: newPrompt},
             ]
         }
     ],
