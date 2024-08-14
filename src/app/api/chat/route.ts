@@ -22,7 +22,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: `You are an AI that accepts images and user notes and returns what the user is happening and insights from the scene. user notes: ${notes}`},
+                { type: "text", text: `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. context and insights: `},
                 ...images.map((image: any) => (
                   {
                     type: "image_url",

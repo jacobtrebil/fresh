@@ -137,17 +137,13 @@ export default function FoodDetection() {
         '180a'] */  // Example: Additional services you might want to interact with
       };
   
-      console.log("Requesting Bluetooth Device...");
       const device = await navigator.bluetooth.requestDevice(options);
 
-      console.log("Device selected:", device);
       if (!device) {
-        console.error("No device selected!");
         setDeviceConnectionError("No device selected!");
         return;
       }
   
-      console.log("Device name:", device.name);
       setDeviceName(device.name || 'Unnamed device');
   
       console.log("Connecting to GATT Server...");
@@ -170,11 +166,7 @@ export default function FoodDetection() {
     // Method 1: Direct access
     try {
       batteryService = await server.getPrimaryService(batteryServiceUUID);
-      console.log("batteryService: ", batteryService);
-    
-      console.log("Attempting direct access to custom service...");
       customService = await server.getPrimaryService(customServiceUUID);
-      console.log("Custom service found via direct access");
     
       // Battery Level characteristic UUID
       const batteryLevelCharUUID = '00002a19-0000-1000-8000-00805f9b34fb';
@@ -266,8 +258,6 @@ export default function FoodDetection() {
       // Access characteristics
       const photoDataChar = await customService.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
       const photoControlChar = await customService.getCharacteristic('19b10006-e8f2-537e-4f6c-d104768a1214');
-        
-      console.log("Photo Data Characteristic properties:", photoDataChar.properties);
           
       await triggerPhotoCaptureNew(photoControlChar);
       await handlePhotoData(photoDataChar, photoControlChar);
@@ -315,15 +305,11 @@ export default function FoodDetection() {
   
     // Set up notifications for Photo Data Characteristic
     await photoDataChar.startNotifications();
-    console.log("getting past await");
     photoDataChar.addEventListener('characteristicvaluechanged', (event) => {
-      console.log("Photo Data Characteristic value changed");
       const value = new Uint8Array(event.target.value.buffer);
-      console.log("Received data:", value);
       
       if (value.length > 0) {
         accumulatedData = new Uint8Array([...accumulatedData, ...value.slice(2)]);
-        console.log("Accumulated data length:", accumulatedData.length);
         if (isPhotoComplete(accumulatedData)) {
           console.log("Photo capture complete");
           processPhoto(accumulatedData);
@@ -367,7 +353,6 @@ export default function FoodDetection() {
   // Process the complete photo data
   const processPhoto = (data) => {
     const base64Data = btoa(String.fromCharCode.apply(null, data));
-    console.log("Complete photo data (base64):", base64Data);
     setBase64Img(base64Data);
     base64Images.push(base64Data);
     if (base64Images.length > 9) {
@@ -377,21 +362,15 @@ export default function FoodDetection() {
     // TODO: Display or further process the photo
   };
 
-  useEffect(() => {
-    console.log("base64Images = ", base64Images);
-  }, [base64Images]);
-
-  useEffect(() => {
-    console.log("services = ", services);
-  }, [services]);
-
   const newImages: string[] = [];
 
   useEffect(() => {
-    if (base64Images.length === 9 && !newOpenAIResponse) {
+    console.log("base64Images.length = ", base64Images.length);
+    console.log("base64Images.length % 3 = ", base64Images.length % 3);
+    if (base64Images.length !== 0 && base64Images.length % 3 === 0) {
       handleSubmit();
     }
-  }, [base64Images, handleSubmit])
+  }, [base64Images])
 
     async function handleSubmit() {
         if (images[0] === "") {
@@ -445,8 +424,6 @@ export default function FoodDetection() {
   useEffect(() => {
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
-        console.log("files length = ", files.length);
-        console.log("files[i] = ", files[i]);
         readFile(files[i]);
       }
       setFileReadingComplete(true);
@@ -476,7 +453,7 @@ export default function FoodDetection() {
         </div>
         { !deviceName && (
           <div className="headerRight">
-            <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
+            <button className="scan" onClick={scanForBLEDevices}>Connect Your Pal</button>
           </div>
         )}
         { deviceName && (

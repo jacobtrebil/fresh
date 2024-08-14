@@ -18,7 +18,7 @@ export default function Chat() {
   return (
     <div className="main">
       <h1 className="freshHeadline">Fresh</h1>
-      <button className="button" onClick={goToFoodDetection}>Food Detection →</button><br></br>
+      <button className="button" onClick={goToFoodDetection}>Live Feed →</button><br></br>
       <button className="button" onClick={goToHealthGPT}>Health Coach →</button><br></br>
       <button className="button" onClick={goToWhoopData}>Health Impact →</button><br></br>
     </div>
