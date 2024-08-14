@@ -13,10 +13,10 @@ export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
   const prompt = await req.json();
-  console.log("prompt = ", prompt);
+  // console.log("prompt = ", prompt);
   // const { notes, images } = await req.json();
-  const notes = prompt.notes;
-  const images = prompt.images;
+  const notes = prompt.prompt.notes;
+  const images = prompt.prompt.images;
 
   console.log("notes = ", notes);
   console.log("images = ", images);
