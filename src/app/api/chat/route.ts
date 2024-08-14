@@ -12,13 +12,14 @@ export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
-  console.log("req = ", req);
-  console.log("req.json() = ", await req.json());
-  const { prompt } = await req.json();
+  const prompt = await req.json();
   console.log("prompt = ", prompt);
   // const { notes, images } = await req.json();
   const notes = prompt.notes;
   const images = prompt.images;
+
+  console.log("notes = ", notes);
+  console.log("images = ", images);
 
   const newPrompt = `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. 
   You are sometimes given previous context as well. If you are given previous context, include the most interesting, insightful, and unique context and add all new context to your response as well. 
