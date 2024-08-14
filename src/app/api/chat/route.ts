@@ -1,6 +1,6 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 import OpenAI from 'openai';
-// import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   console.log("response = ", response);
 
   // Convert the response into a friendly text-stream
-  // const stream: Response = OpenAIStream(response);
+  const stream = OpenAIStream(response);
   // Create a new Response object using the stream
   // const res = new Response(stream.body, stream);
   // Respond with the new Response object
