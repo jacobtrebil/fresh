@@ -9,8 +9,10 @@ import grapes from "../../../public/grapes.png";
 import veggies from "../../../public/veggies.png";
 import pal from "../../../public/pal.png";
 import { AIStreamParser } from 'ai';
+import { useCompletion } from 'ai/react';
  
 export default function FoodDetection() {
+  const { complete, completion, isLoading, error } = useCompletion({ api: '/api/chat'});
 
   const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState("");
@@ -380,11 +382,20 @@ export default function FoodDetection() {
 
   const newImages: string[] = [];
 
+  const requestOptions: RequestOptions = {
+    notes: newOpenAIResponse,
+    images: base64Images,
+    // ... other properties if required
+  } as any;
+  
+  complete(requestOptions);
+
   useEffect(() => {
     console.log("photoCounter = ", photoCounter);
     console.log("photoCounter % 3 = ", photoCounter % 3);
     if (photoCounter !== 0 && photoCounter % 3 === 0) {
-      handleSubmit();
+      // complete();
+      // handleSubmit();
     }
   }, [base64Images])
 
