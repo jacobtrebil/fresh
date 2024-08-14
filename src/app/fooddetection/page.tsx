@@ -36,6 +36,7 @@ export default function FoodDetection() {
   const [base64Images, setBase64Images] = useState<string[]>([]);
   const [base64ImagesSet, setBase64ImagesSet] = useState(false);
   const [isFirstImageSkipped, setIsFirstImageSkipped] = useState(false);
+  const [photoCounter, setPhotoCounter] = useState(0);
 
   function parseOpenAIStream() : AIStreamParser {
     let previous = '';
@@ -305,6 +306,7 @@ export default function FoodDetection() {
     };
 
     let isFirstPhoto = true;
+    let photoCounter = 0;
   
     // Set up notifications for Photo Data Characteristic
     await photoDataChar.startNotifications();
@@ -321,7 +323,9 @@ export default function FoodDetection() {
           } else {
             console.log("Photo capture complete");
             processPhoto(accumulatedData);
+            photoCounter++;
           }
+          setPhotoCounter(photoCounter);
           // processPhoto(accumulatedData);
           accumulatedData = new Uint8Array();
           captureState = 'idle';
@@ -377,9 +381,9 @@ export default function FoodDetection() {
   const newImages: string[] = [];
 
   useEffect(() => {
-    console.log("base64Images.length = ", base64Images.length);
-    console.log("base64Images.length % 3 = ", base64Images.length % 3);
-    if (base64Images.length !== 0 && base64Images.length % 3 === 0) {
+    console.log("photoCounter = ", photoCounter);
+    console.log("photoCounter % 3 = ", photoCounter % 3);
+    if (photoCounter !== 0 && photoCounter % 3 === 0) {
       handleSubmit();
     }
   }, [base64Images])
@@ -460,12 +464,12 @@ export default function FoodDetection() {
     <div className="main">
       <header>
         <div className="logoSection">
-          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Pal</h1>
+          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Buddy</h1>
           <Image className="icon" src={pal} alt="icon" width={50} />
         </div>
         { !deviceName && (
           <div className="headerRight">
-            <button className="scan" onClick={scanForBLEDevices}>Connect Your Pal</button>
+            <button className="scan" onClick={scanForBLEDevices}>Connect Your Buddy</button>
           </div>
         )}
         { deviceName && (
@@ -489,7 +493,7 @@ export default function FoodDetection() {
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
             { base64Images.length > 0 && base64Images.length < 4 && !newOpenAIResponse && (
-              <p className="aiLoadingMessage">AI will analyze 3 photos at a time...</p>
+              <p className="aiLoadingMessage">Buddy will analyze 3 photos at a time...</p>
             )}
             { newOpenAIResponse && (
             <p className="understandingText">{newOpenAIResponse}</p>
