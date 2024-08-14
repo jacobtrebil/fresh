@@ -3,6 +3,7 @@
 import React, { useState, useEffect} from 'react';
 import Image from 'next/image';
 import { connect } from 'http2';
+import { AIStreamParser } from 'ai';
  
 export default function FoodDetection() {
 
@@ -29,6 +30,25 @@ export default function FoodDetection() {
 
   const [base64Images, setBase64Images] = useState<string[]>([]);
   const [base64ImagesSet, setBase64ImagesSet] = useState(false);
+
+  function parseOpenAIStream() : AIStreamParser {
+    let previous = '';
+
+    return data => {
+      const json = JSON.parse(data) as {
+        completion: string;
+        stop: string | null;
+        stop_reason: string | null;
+        truncated: boolean;
+        log_id: string;
+        model: string;
+        exception: string | null;
+      };
+
+      const text = json.completion;
+      return text
+    }
+  }
  
   /* useEffect(() => {
     scanForBLEDevices();

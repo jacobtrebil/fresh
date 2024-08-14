@@ -1,3 +1,4 @@
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 import OpenAI from 'openai';
 // import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
@@ -36,9 +37,16 @@ export async function POST(req: Request) {
 
   console.log("response = ", response);
 
+  // Convert the response into a friendly text-stream
+  // const stream: Response = OpenAIStream(response);
+  // Create a new Response object using the stream
+  // const res = new Response(stream.body, stream);
+  // Respond with the new Response object
+  // return new StreamingTextResponse(res);
+
     let jsonString = response.choices[0].message.content;
 
-    console.log("jsonString = ", jsonString);
+    // console.log("jsonString = ", jsonString);
     
     // Remove markdown code block syntax (more robust approach)
     // jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
