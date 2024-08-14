@@ -32,14 +32,26 @@ header h1 {
   padding: 8px 16px;
   font-size: 1rem;
   font-weight: 500;
-  margin: 0 0 40px 0;
+  margin: 10px 0 40px 0;
+}
+
+.logoSection {
+  display: inline-block;
+  width: 30%;
+  text-align: left;
 }
 
 .logo {
   text-align: left;
+  margin: 15px 0 0 20px !important;
   display: inline-block;
-  width: 25%;
-  margin: 15px 0 0 0 !important;
+  color: black !important;
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: top;
+  margin: 12px 0 0 10px;
 }
 
 .headerRight {

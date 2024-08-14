@@ -3,6 +3,10 @@
 import React, { useState, useEffect} from 'react';
 import Image from 'next/image';
 import { connect } from 'http2';
+import icon from "../../../public/icon.png";
+import pepper from "../../../public/pepper.png";
+import grapes from "../../../public/grapes.png";
+import veggies from "../../../public/veggies.png";
 import { AIStreamParser } from 'ai';
  
 export default function FoodDetection() {
@@ -459,7 +463,10 @@ export default function FoodDetection() {
   return (
     <div className="main">
       <header>
-        <h1 className="logo" style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
+        <div className="logoSection">
+          <h1 className="logo" style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
+          <Image className="icon" src={veggies} alt="icon" width={75} />
+        </div>
         { !deviceName && (
           <div className="headerRight">
             <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
