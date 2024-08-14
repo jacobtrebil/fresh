@@ -387,6 +387,12 @@ export default function FoodDetection() {
 
   const newImages: string[] = [];
 
+  useEffect(() => {
+    if (base64Images.length === 9 && !newOpenAIResponse) {
+      handleSubmit();
+    }
+  }, [base64Images, handleSubmit])
+
     async function handleSubmit() {
         if (images[0] === "") {
             window.alert('No image selected');
@@ -491,7 +497,7 @@ export default function FoodDetection() {
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
             { newOpenAIResponse && (
-            <p>{newOpenAIResponse}</p>
+            <p className="understandingText">{newOpenAIResponse}</p>
             )}
           </div>
     </div>

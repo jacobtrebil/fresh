@@ -99,10 +99,11 @@ h2 {
 }
 
 .uploadSection {
-  width: 55%;
-  margin: 2.5% 2% 2% 2%;
+  width: 45%;
+  margin: 2.5% 2% 2% 5%;
   text-align: left;
   display: inline-block;
+  float: left;
 }
 
 .contextSection {
@@ -110,8 +111,12 @@ h2 {
   margin: 2.5% 40px 0 0;
   border-radius: 16px;
   width: 35%; 
-  display: inline-block;
-  float: right; 
+  display: inline-block; 
+}
+
+.understandingText {
+  text-align: left;
+  margin: 0 0 0 0;
 }
 
 .uploadSection h2 {
@@ -151,7 +156,7 @@ h2 {
 } */
 
 .aiAnalysis {
-  margin: 20px 0 10% 40px !important;
+  margin: 20px 0 10% 0 !important;
   text-align: left;
   font-weight: 900;
 }
