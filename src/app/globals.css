@@ -359,3 +359,54 @@ input {
   font-size: 0.875rem;
   margin: 5px;
 }
+
+
+
+
+
+/* Chatbot Page */
+
+.chatSection {
+  vertical-align: bottom;
+  width: 100%;
+  margin: 20% auto 10% auto !important;
+  text-align: center !important;
+}
+
+.chatBox {
+  width: 50%;
+  margin: 0 auto;
+  background: #F4F4F4;
+  border: none;
+  padding: 20px 20px 20px 40px !important;
+  border-radius: 9999px;
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 500;
+  position: fixed;
+  bottom: 20;
+  left: 50%;  /* Position the left edge at the center */
+  transform: translateX(-50%); 
+}
+
+.chatBox::placeholder {
+  text-align: left;
+  padding: 0 0 0 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #9B9B9B;
+}
+
+.chatBox::selection {
+  border: 3px solid blue;
+}
+
+.messagesSection {
+  width: 50%;
+  margin: 40px auto 0 auto;
+  text-align: left;
+}
+
+.chatLogoSection {
+  text-align: center;
+}

@@ -1,12 +1,13 @@
-import { StreamingTextResponse } from 'ai';
-import OpenAI from 'openai';
-// import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
+// import OpenAI from 'openai';
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
 // Create an OpenAI API client (that's edge friendly!)
-const openai = new OpenAI({
+/* const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}); */
  
+export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
@@ -15,7 +16,35 @@ export async function POST(req: Request) {
   console.log("request = ", request);
   console.log("request messages = ", request.messages[0]?.content);
 
-  const response = await openai.chat.completions.create({
+  const config = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+  })
+  const openai = new OpenAIApi(config)
+
+  const prompt = `You are an AI that gives health advice. Accept a question and respond with health coach advice. 
+  user question: ${request.messages[0]?.content}`;
+
+  try {
+    const response = await openai.createChatCompletion({
+      model: 'gpt-4-1106-vision-preview',
+      stream: true,
+      messages: [
+        {
+            role: 'user',
+            // @ts-ignore
+            content: [
+                { type: "text", text: prompt},
+            ]
+        }
+    ],
+    });
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
+  } catch (error) {
+    console.error('Error creating chat completion:', error);
+  }
+
+  /* const response = await openai.chat.completions.create({
     model: 'gpt-4-1106-vision-preview',
     max_tokens: 4096,
     messages: [
@@ -23,16 +52,16 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: `You are an AI that gives health advice. Accept a question and respond with health coach advice. ${request.messages[0]?.content}`},
+                { type: "text", text: prompt},
             ]
         }
     ],
   });
 
   console.log("response = ", response);
-  console.log("response.choices[0].message.content = ", response.choices[0].message.content);
+  console.log("response.choices[0].message.content = ", response.choices[0].message.content); */
 
-    let jsonString: any = response.choices[0].message.content;
+    // let jsonString: any = response.choices[0].message.content;
 
     // Remove markdown code block syntax (more robust approach)
     // jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
@@ -45,10 +74,12 @@ export async function POST(req: Request) {
     // const jsonObject = JSON.parse(jsonString);
 
     // Return the JSON object
-    return new StreamingTextResponse(response/* JSON.stringify(jsonString)*/)
+    // const stream = OpenAIStream(response);
+    // return new StreamingTextResponse(response/* JSON.stringify(jsonString)*/)
  
   // Convert the response into a friendly text-stream
   // const stream = OpenAIStream(response);
   // Respond with the stream
   // return new StreamingTextResponse(stream);
 }
+
