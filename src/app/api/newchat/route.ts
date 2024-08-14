@@ -9,7 +9,10 @@ const openai = new OpenAI({
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
-  const { notes } = await req.json();
+  const request = await req.json();
+
+  console.log("request = ", request);
+  console.log("request messages = ", request.messages[0]?.content);
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-1106-vision-preview',
@@ -19,26 +22,29 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: `You are an AI that gives health advice. Accept a question and respond with health coach advice.`},
+                { type: "text", text: `You are an AI that gives health advice. Accept a question and respond with health coach advice. ${request.messages[0]?.content}`},
             ]
         }
     ],
   });
 
-    let jsonString = response.choices[0].message.content;
+  console.log("response = ", response);
+  console.log("response.choices[0].message.content = ", response.choices[0].message.content);
+
+    let jsonString: any = response.choices[0].message.content;
 
     // Remove markdown code block syntax (more robust approach)
-    jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
-    jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
+    // jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
+    // jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
 
     // Trim any residual whitespace that might cause parsing issues
-    jsonString = jsonString.trim();
+    // jsonString = jsonString.trim();
 
     // Parse the JSON string to an object
-    const jsonObject = JSON.parse(jsonString);
+    // const jsonObject = JSON.parse(jsonString);
 
     // Return the JSON object
-    return new Response(JSON.stringify(jsonObject))
+    return new Response(JSON.stringify(jsonString))
  
 
 
