@@ -382,18 +382,17 @@ export default function FoodDetection() {
 
   const newImages: string[] = [];
 
-  const requestOptions: RequestOptions = {
+  const requestOptions = {
     notes: newOpenAIResponse,
     images: base64Images,
     // ... other properties if required
   } as any;
-  
-  complete(requestOptions);
 
   useEffect(() => {
     console.log("photoCounter = ", photoCounter);
     console.log("photoCounter % 3 = ", photoCounter % 3);
     if (photoCounter !== 0 && photoCounter % 3 === 0) {
+      complete(requestOptions);
       // complete();
       // handleSubmit();
     }

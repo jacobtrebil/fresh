@@ -1,27 +1,34 @@
 import { OpenAIStream, StreamingTextResponse } from 'ai';
-import OpenAI from 'openai';
+// import OpenAI from 'openai';
 import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
 export const runtime = 'edge';
 
 // Create an OpenAI API client (that's edge friendly!)
-const openai = new OpenAI({
+/* const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-});
+}); */
  
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
-  const { notes, images } = await req.json();
+  console.log("req = ", req);
+  console.log("req.json() = ", await req.json());
+  const { prompt } = await req.json();
+  console.log("prompt = ", prompt);
+  // const { notes, images } = await req.json();
+  const notes = prompt.notes;
+  const images = prompt.images;
 
-  const prompt = `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. 
+  const newPrompt = `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. 
   You are sometimes given previous context as well. If you are given previous context, include the most interesting, insightful, and unique context and add all new context to your response as well. 
   ALWAYS give an answer between 4 and 7 sentences. Do not mention context about the camera or necklace taking the photos. Just the subject and environment. 
   Do not mention previous sets / photos. Just give the overall context from all of the sets / photos combined with past context.
   previous context and insights: ${notes} context and insights: `;
 
   console.log("notes = ", notes);
-  console.log("images = ", images.length);
+  console.log("images = ", images);
+  // console.log("images = ", images.length);
 
   const config = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -37,7 +44,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: prompt},
+                { type: "text", text: newPrompt},
                 ...images.map((image: any) => (
                   {
                     type: "image_url",
