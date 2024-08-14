@@ -459,18 +459,20 @@ export default function FoodDetection() {
   return (
     <div className="main">
       <header>
-        <h1 style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
-      </header>
-      <div className="uploadSection">
+        <h1 className="logo" style={{ textAlign: "left", margin: "0 auto" }}>Fresh</h1>
         { !deviceName && (
-          <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
-        )}
-        { deviceName && (
-          <div>
-            <p className="connection">Connected to {deviceName}</p>
-            <p className="batteryPercentage">Battery Level: {batteryLevel}%</p>
+          <div className="headerRight">
+            <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
           </div>
         )}
+        { deviceName && (
+          <div className="headerRight">
+            <p className="connection">Connected to {deviceName}</p>
+            <p className="batteryPercentage">Battery: {batteryLevel}%</p>
+          </div>
+        )}
+      </header>
+      <div className="uploadSection">
         <h2>Wearable Images</h2>
         <div>
         { base64Images.length > 0 && base64ImagesSet && base64Images.map((base64image, index: any) => (
@@ -496,6 +498,14 @@ export default function FoodDetection() {
     </div>
   );
 }
+
+/*         { !deviceName && (
+          <button className="scan" onClick={scanForBLEDevices}>Scan For BLE Devices</button>
+        )}
+        { deviceName && (
+          <div>
+          </div>
+        )} */
 
 /* 
 

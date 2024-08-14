@@ -35,15 +35,30 @@ header h1 {
   margin: 0 0 40px 0;
 }
 
+.logo {
+  text-align: left;
+  display: inline-block;
+  width: 25%;
+  margin: 15px 0 0 0 !important;
+}
+
+.headerRight {
+  width: 65%;
+  display: inline-block;
+  float: right;
+  text-align: right;
+  margin: 20px 40px 0 0;
+}
+
 .connection {
-  color: grey;
-  padding: 0px 0px 20px 0px;
+  color: rgb(9, 175, 9);
+  padding: 0px 0px 5px 0px;
   font-size: 1.25rem;
 }
 
 .batteryPercentage {
   color: black;
-  padding: 0px 0px 40px 0px;
+  padding: 0px 0px 20px 0px;
   font-size: 1rem;
 }
 
