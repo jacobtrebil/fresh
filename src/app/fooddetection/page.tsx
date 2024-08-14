@@ -383,7 +383,7 @@ export default function FoodDetection() {
   const newImages: string[] = [];
 
   const requestOptions = {
-    notes: newOpenAIResponse,
+    notes: completion ? completion : "",
     images: base64Images,
     // ... other properties if required
   } as any;
@@ -502,11 +502,11 @@ export default function FoodDetection() {
         </div>
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
-            { base64Images.length > 0 && base64Images.length < 4 && !newOpenAIResponse && (
+            { base64Images.length > 0 && base64Images.length < 4 && !completion && (
               <p className="aiLoadingMessage">Buddy will analyze 3 photos at a time...</p>
             )}
-            { newOpenAIResponse && (
-            <p className="understandingText">{newOpenAIResponse}</p>
+            { completion && (
+            <p className="understandingText">{completion}</p>
             )}
           </div>
     </div>
