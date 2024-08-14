@@ -21,7 +21,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: `You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a SINGLE json object. NEVER return a string or an array. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken and carrots, calories: 270, protein: 22 } if you're unsure of a variable, still do it and provide your best guess instead. If there are multiple images, add all the foods to the same foods variable. user notes: ${notes}`},
+                { type: "text", text: `You are an AI that accepts images and user notes and returns what the user is happening and insights from the scene. user notes: ${notes}`},
                 ...images.map((image: any) => (
                   {
                     type: "image_url",
@@ -41,17 +41,17 @@ export async function POST(req: Request) {
     console.log("jsonString = ", jsonString);
     
     // Remove markdown code block syntax (more robust approach)
-    jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
-    jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
+    // jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
+    // jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
     
     // Trim any residual whitespace that might cause parsing issues
-    jsonString = jsonString.trim();
+    // jsonString = jsonString.trim();
     
     // Parse the JSON string to an object
-    const jsonObject = jsonString ? JSON.parse(jsonString) : {};
+    // const jsonObject = jsonString ? JSON.parse(jsonString) : {};
     
     // Return the JSON object
-    return new Response(JSON.stringify(jsonObject))
+    return new Response(JSON.stringify(/*jsonObject */jsonString))
  
 
 
@@ -65,6 +65,10 @@ export async function POST(req: Request) {
   // Respond with the stream
   // return new StreamingTextResponse(stream);
 }
+
+// OLD Prompt
+
+/* `You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a SINGLE json object. NEVER return a string or an array. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken and carrots, calories: 270, protein: 22 } if you're unsure of a variable, still do it and provide your best guess instead. If there are multiple images, add all the foods to the same foods variable. user notes: ${notes}` */
 
 // "You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein."
 

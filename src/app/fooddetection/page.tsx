@@ -16,6 +16,7 @@ export default function FoodDetection() {
     calories: "",
     protein: "",
   });
+  const [newOpenAIResponse, setNewOpenAIResponse] = useState("");
   const [fileReadingComplete, setFileReadingComplete] = useState(false);
   const [fileSettingComplete, setFileSettingComplete] = useState(false);
   const [notes, setNotes] = useState("");
@@ -378,7 +379,7 @@ export default function FoodDetection() {
             })
         })
         .then((response) => response.json())
-        .then(response => setOpenAIResponse(response))
+        .then(response => setNewOpenAIResponse(response))
     }       
 
     function handleFileChange(e: any) {
@@ -429,6 +430,10 @@ export default function FoodDetection() {
     console.log("images = ", images);
   }, [images]); */
 
+  useEffect(() => {
+    console.log("openAIResponse = ", openAIResponse);
+  }, [openAIResponse]);
+
   const PROMPT_TEMPLATE = 'You take an image and return a list of food items in the image.'
 
   return (
@@ -463,6 +468,9 @@ export default function FoodDetection() {
         <div className="foodLogSection">
           <div>
             <p className="aiAnalysis">AI Analysis</p>
+            { newOpenAIResponse && (
+            <p>{newOpenAIResponse}</p>
+            )}
           </div>
         </div>
     </div>
