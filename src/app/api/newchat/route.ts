@@ -1,3 +1,4 @@
+import { StreamingTextResponse } from 'ai';
 import OpenAI from 'openai';
 // import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge';
  
@@ -44,15 +45,8 @@ export async function POST(req: Request) {
     // const jsonObject = JSON.parse(jsonString);
 
     // Return the JSON object
-    return new Response(JSON.stringify(jsonString))
+    return new StreamingTextResponse(response/* JSON.stringify(jsonString)*/)
  
-
-
-
-
-
-
-
   // Convert the response into a friendly text-stream
   // const stream = OpenAIStream(response);
   // Respond with the stream

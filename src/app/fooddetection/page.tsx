@@ -374,7 +374,7 @@ export default function FoodDetection() {
             },
             body: JSON.stringify({
                 notes: notes,
-                image: base64Images,
+                images: base64Images,
             })
         })
         .then((response) => response.json())
@@ -461,22 +461,8 @@ export default function FoodDetection() {
         <button type="submit" className="button" onClick={handleSubmit}>Submit</button>
         </div>
         <div className="foodLogSection">
-            { openAIResponse?.food !== "" ? 
-            <div className="foodLog">
-              <div className="day">
-                <h2>Today</h2>
-                <p><b>Foods:</b> {openAIResponse?.food}</p>
-                <p><b>Calories:</b> {openAIResponse?.calories}</p>
-                <p><b>Protein:</b> {openAIResponse?.protein}</p>
-              </div>
-          </div> : null}
-            <div className="foodLog">
-              <div className="day">
-                <h2>Yesterday</h2>
-                <p><b>Foods:</b> Chicken, Broccoli, Potatoes, Pasta</p>
-                <p><b>Calories:</b> 2,055</p>
-                <p><b>Protein:</b> 117</p>
-              </div>
+          <div>
+            <p className="aiAnalysis">AI Analysis</p>
           </div>
         </div>
     </div>

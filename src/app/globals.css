@@ -112,6 +112,11 @@ h2 {
   margin: 0 0 0 0;
 } */
 
+.aiAnalysis {
+  margin: 5% auto 2% auto !important;
+  font-size: 1.25rem;
+}
+
 .foodLogSection {
   width: 40%; 
   display: inline-block;

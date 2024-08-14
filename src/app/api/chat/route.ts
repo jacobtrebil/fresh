@@ -9,9 +9,9 @@ const openai = new OpenAI({
 export const dynamic = 'force-dynamic';
  
 export async function POST(req: Request) {
-  const { notes, image } = await req.json();
+  const { notes, images } = await req.json();
 
-  console.log("image = ", image.length);
+  console.log("images = ", images.length);
 
   const response = await openai.chat.completions.create({
     model: 'gpt-4-1106-vision-preview',
@@ -22,11 +22,11 @@ export async function POST(req: Request) {
             // @ts-ignore
             content: [
                 { type: "text", text: `You are an AI that takes an image of food and creates a JSON object based on this image. Have 3 variables included: food, calories, and protein. Make sure to ONLY return a SINGLE json object. NEVER return a string or an array. example1: { food: pringles, calories: 200, protein: 1 }, example2: { food: chicken and carrots, calories: 270, protein: 22 } if you're unsure of a variable, still do it and provide your best guess instead. If there are multiple images, add all the foods to the same foods variable. user notes: ${notes}`},
-                ...image.map((image: any) => (
+                ...images.map((image: any) => (
                   {
                     type: "image_url",
                     image_url: { 
-                        "url": image
+                        "url": `data:image/jpeg;base64,${image}`
                     }
                 }))
             ]
@@ -34,18 +34,22 @@ export async function POST(req: Request) {
     ],
   });
 
+  console.log("response = ", response);
+
     let jsonString = response.choices[0].message.content;
 
+    console.log("jsonString = ", jsonString);
+    
     // Remove markdown code block syntax (more robust approach)
     jsonString = jsonString.replace(/```json\n?/g, ''); // Remove starting backticks and optional newline
     jsonString = jsonString.replace(/\n?```/g, ''); // Remove ending backticks and optional newline
-
+    
     // Trim any residual whitespace that might cause parsing issues
     jsonString = jsonString.trim();
-
+    
     // Parse the JSON string to an object
-    const jsonObject = JSON.parse(jsonString);
-
+    const jsonObject = jsonString ? JSON.parse(jsonString) : {};
+    
     // Return the JSON object
     return new Response(JSON.stringify(jsonObject))
  

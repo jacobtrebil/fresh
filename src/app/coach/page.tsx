@@ -1,12 +1,17 @@
 'use client';
 
 import { useChat } from 'ai/react';
+import { useEffect } from 'react';
 
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: 'api/newchat'
     // keepLastMessageOnError: true,
   });
+
+  useEffect(() => {
+    console.log("messages = ", messages);
+  }, [messages]);
 
   return (
     <>
