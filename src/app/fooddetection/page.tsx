@@ -384,13 +384,13 @@ export default function FoodDetection() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                notes: notes,
+                notes: newOpenAIResponse,
                 images: base64Images,
             })
         })
         .then((response) => response.json())
         .then(response => setNewOpenAIResponse(response))
-    }       
+    }    
 
     function handleFileChange(e: any) {
         if (e.target.files === null) {

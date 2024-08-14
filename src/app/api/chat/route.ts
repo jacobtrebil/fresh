@@ -12,6 +12,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const { notes, images } = await req.json();
 
+  console.log("notes = ", notes);
   console.log("images = ", images.length);
 
   const response = await openai.chat.completions.create({
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. context and insights: `},
+                { type: "text", text: `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of context and insights from the scene. You are sometimes given previous context as well. If you are given previous context, include the most interesting, insightful, and unique context and add all new context to your response as well. ALWAYS give an answer between 4 and 7 sentences. previous context and insights: ${notes} context and insights: `},
                 ...images.map((image: any) => (
                   {
                     type: "image_url",
