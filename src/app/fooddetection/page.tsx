@@ -489,7 +489,7 @@ export default function FoodDetection() {
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
             { base64Images.length > 0 && base64Images.length < 4 && !newOpenAIResponse && (
-              <p className="aiLoadingMessage">AI will analyze your photos once 3 stream in...</p>
+              <p className="aiLoadingMessage">AI will analyze 3 photos at a time...</p>
             )}
             { newOpenAIResponse && (
             <p className="understandingText">{newOpenAIResponse}</p>
