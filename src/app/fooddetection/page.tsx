@@ -374,7 +374,7 @@ export default function FoodDetection() {
             },
             body: JSON.stringify({
                 notes: notes,
-                image: images,
+                image: base64Images,
             })
         })
         .then((response) => response.json())
@@ -446,18 +446,12 @@ export default function FoodDetection() {
             <p className="batteryPercentage">Battery Level: {batteryLevel}%</p>
           </div>
         )}
-        <h2>Add Food</h2>
+        <h2>Wearable Images</h2>
         <div>
         { base64Images.length > 0 && base64ImagesSet && base64Images.map((base64image, index: any) => (
           <Image className="displayImage" key={index} src={`data:image/jpeg;base64,${base64image}`} alt="food" width="200" height="200"/>
         ))}
         </div>
-        <input 
-          type="file"
-          className= "uploadFiles"
-          multiple
-          onChange={e => handleFileChange(e)}
-        /><br></br>
           <input 
             type="text"
             className="notes"
@@ -489,7 +483,16 @@ export default function FoodDetection() {
   );
 }
 
-/*           { images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
+/* 
+
+        <input 
+          type="file"
+          className= "uploadFiles"
+          multiple
+          onChange={e => handleFileChange(e)}
+        /><br></br>
+
+{ images.length > 0 && fileReadingComplete && images.map((photo, index: any) => (
             <Image className="displayImage" key={index} src={photo} alt="food" width="200" height="200"/>
           ))} */ 
 
