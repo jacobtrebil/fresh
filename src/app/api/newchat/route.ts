@@ -15,14 +15,14 @@ export async function POST(req: Request) {
   const request = await req.json();
 
   console.log("request = ", request);
-  console.log("request messages = ", request.messages[0]?.content);
+  console.log("request messages = ", request.messages[request.messages.length - 1]?.content);
 
   const config = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   })
   const openai = new OpenAIApi(config)
 
-  const newPrompt = contextPrompt(request.messages[0]?.content);
+  const newPrompt = contextPrompt(request.messages[request.messages.length - 1]?.content);
 
   console.log("newPrompt = ", newPrompt);
 
