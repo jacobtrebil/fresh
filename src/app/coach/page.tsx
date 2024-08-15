@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import pal from '../../../public/pal.png';
 
@@ -11,9 +11,36 @@ export default function Page() {
     // keepLastMessageOnError: true,
   });
 
+  const [inputValue, setInputValue] = useState('');
+  const [shouldSubmit, setShouldSubmit] = useState(false);
+
   useEffect(() => {
     console.log("messages = ", messages);
   }, [messages]);
+
+  const setPredefinedInput = (text: any) => {
+    // Create a synthetic event
+    const syntheticEvent = {
+      target: { value: text },
+      preventDefault: () => {}
+    };
+    
+    // Call handleInputChange with our synthetic event
+    handleInputChange(syntheticEvent);
+    // handleSubmit(syntheticEvent);
+  };
+
+  const setInputAndSubmit = useCallback((text: any) => {
+    setPredefinedInput(text);
+    setShouldSubmit(true);
+  }, [setPredefinedInput]);
+
+  useEffect(() => {
+    if (shouldSubmit) {
+      handleSubmit({ preventDefault: () => {} });
+      setShouldSubmit(false);
+    }
+  }, [shouldSubmit, handleSubmit]);
 
   return (
     <>
@@ -37,26 +64,40 @@ export default function Page() {
         </div>
 
       <div className="chatSection">
+        { messages.length === 0 && (
         <div className="chatOptionsBlock">
-            <div className="chatOption">
-                <p>What would you change about my diet?</p>
-            </div>
-            <div className="chatOption">
+            <button 
+                className="chatOption"
+                onClick={() => setInputAndSubmit("What would you change about my diet?")}
+            >What would you change about my diet?</button>
+            <button 
+                className="chatOption"
+                onClick={() => setInputAndSubmit("Plan a workout program for me this week")}
+            >
                 <p>Plan a workout program for me this week</p>
-            </div><br></br>
-            <div className="chatOption">
+            </button><br></br>
+            <button 
+                className="chatOption"
+                onClick={() => setInputAndSubmit("What are some of my health strengths and weaknesses?")}
+            >
                 <p>What are some of my health strengths and weaknesses</p>
-            </div>
-            <div className="chatOption">
+            </button>
+            <button 
+                className="chatOption"
+                onClick={() => setInputAndSubmit("How many calories did I eat yesterday?")}
+            >
                 <p>How many calories did I eat yesterday?</p>
-            </div>
+            </button>
         </div>
+        )}
         <form onSubmit={handleSubmit}>
             <input 
                 className="chatBox" 
-                name="prompt" 
+                name="prompt"
                 value={input} 
-                onChange={handleInputChange} 
+                onChange={handleInputChange}
+                /* value={inputValue} 
+                onChange={e => {setInputValue(e.target.value)}} */
                 placeholder="Message Buddy..."
             />
         </form>
