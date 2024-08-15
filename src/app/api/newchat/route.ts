@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   })
   const openai = new OpenAIApi(config)
 
-  const newPrompt = contextPrompt(request.messages[request.messages.length - 1]?.content);
+  const newPrompt = contextPrompt(request.messages /* request.messages[request.messages.length - 1]?.content*/);
 
   console.log("newPrompt = ", newPrompt);
 
