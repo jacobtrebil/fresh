@@ -369,7 +369,7 @@ input {
 .chatSection {
   vertical-align: bottom;
   width: 100%;
-  margin: 20% auto 0 auto !important;
+  margin: 0 auto 0 auto !important;
   text-align: center !important;
 }
 
@@ -406,7 +406,8 @@ input {
   margin: 40px auto 0 auto;
   text-align: left;
   overflow-y: auto;
-  height: 75vh;
+  height: auto;
+  max-height: 75vh;
   vertical-align: top;
 }
 
