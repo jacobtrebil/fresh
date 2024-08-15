@@ -1,5 +1,6 @@
 'use client';
-
+import glow from "../../public/glow.png";  
+import Image from "next/image";
  
 export default function Chat() {
 
@@ -17,10 +18,15 @@ export default function Chat() {
 
   return (
     <div className="main">
-      <h1 className="freshHeadline">Fresh</h1>
-      <button className="button" onClick={goToFoodDetection}>Live Feed →</button><br></br>
-      <button className="button" onClick={goToHealthGPT}>Health Coach →</button><br></br>
-      <button className="button" onClick={goToWhoopData}>Health Impact →</button><br></br>
+      <div className="logoSection">
+        <h1 className="freshHeadline">Glow</h1>
+        <Image src={glow} alt="glow" className="glow" width={100} />
+      </div>
+      <div className="mainButtons">
+        <button className="mainButton" onClick={goToFoodDetection}>Photo Stream →</button>
+        <button className="mainButton" onClick={goToHealthGPT}>Health Coach →</button>
+        <button className="mainButton" onClick={goToWhoopData}>Suggestions →</button>
+      </div>
     </div>
   );
 }

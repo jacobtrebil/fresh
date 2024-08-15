@@ -86,8 +86,10 @@ export default function Page() {
         <div className="chatOptionsBlock">
             <button 
                 className="chatOption"
-                onClick={() => setInputAndSubmit("What would you change about my diet?")}
-            >What would you change about my diet?</button>
+                onClick={() => setInputAndSubmit("What are some of my health strengths and weaknesses?")}
+            >
+                What are some of my health strengths and weaknesses
+            </button>
             <button 
                 className="chatOption"
                 onClick={() => setInputAndSubmit("Plan a workout program for me this week")}
@@ -96,10 +98,8 @@ export default function Page() {
             </button><br></br>
             <button 
                 className="chatOption"
-                onClick={() => setInputAndSubmit("What are some of my health strengths and weaknesses?")}
-            >
-                What are some of my health strengths and weaknesses
-            </button>
+                onClick={() => setInputAndSubmit("What would you change about my diet?")}
+            >What would you change about my diet?</button>
             <button 
                 className="chatOption"
                 onClick={() => setInputAndSubmit("How many calories did I eat yesterday?")}
