@@ -178,5 +178,7 @@ Bitter taste perception: non taster
 Lactose tolerance: tolerant
 Coeliac predisposition: low
 
+Yesterday I ate 2,050 calories and 123g of protein. 
+
 User messages: ${userInput}`
 }

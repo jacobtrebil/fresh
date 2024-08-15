@@ -37,6 +37,20 @@ export default function Page() {
         </div>
 
       <div className="chatSection">
+        <div className="chatOptionsBlock">
+            <div className="chatOption">
+                <p>What would you change about my diet?</p>
+            </div>
+            <div className="chatOption">
+                <p>Plan a workout program for me this week</p>
+            </div><br></br>
+            <div className="chatOption">
+                <p>What are some of my health strengths and weaknesses</p>
+            </div>
+            <div className="chatOption">
+                <p>How many calories did I eat yesterday?</p>
+            </div>
+        </div>
         <form onSubmit={handleSubmit}>
             <input 
                 className="chatBox" 

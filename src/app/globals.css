@@ -438,3 +438,26 @@ input {
   max-width: none;
   font-size: 1rem;
 }
+
+.chatOptionsBlock {
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  position: absolute;
+  bottom: 90;
+}
+
+.chatOption {
+  display: inline-block;
+  width: 24%;
+  margin: 0.5%;
+  background-color: #F4F4F4;
+  border-radius: 16px;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.chatOption:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
