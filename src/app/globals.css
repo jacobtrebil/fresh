@@ -405,6 +405,9 @@ input {
   width: 50%;
   margin: 40px auto 0 auto;
   text-align: left;
+  overflow-y: auto;
+  height: 75vh;
+  vertical-align: top;
 }
 
 .chatLogoSection {

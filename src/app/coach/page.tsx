@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import pal from '../../../public/pal.png';
 
@@ -13,6 +13,24 @@ export default function Page() {
 
   const [inputValue, setInputValue] = useState('');
   const [shouldSubmit, setShouldSubmit] = useState(false);
+
+  type ScrollableElement = HTMLElement & {
+    scrollTop: number;
+    scrollHeight: number;
+  };
+
+  const chatSectionRef = useRef<ScrollableElement | null>(null);
+
+  const scrollToBottom = () => {
+    if (chatSectionRef.current) {
+      const scrollElement = chatSectionRef.current;
+      scrollElement.scrollTop = scrollElement.scrollHeight;
+    }
+  };
+  
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); 
 
   useEffect(() => {
     console.log("messages = ", messages);
@@ -48,7 +66,7 @@ export default function Page() {
             <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Buddy</h1>
             <Image className="icon" src={pal} alt="icon" width={50} />
         </div>
-        <div className="messagesSection">
+        <div className="messagesSection" ref={chatSectionRef}>
             {messages.map(message => (
                 <div 
                     key={message.id}
@@ -74,19 +92,19 @@ export default function Page() {
                 className="chatOption"
                 onClick={() => setInputAndSubmit("Plan a workout program for me this week")}
             >
-                <p>Plan a workout program for me this week</p>
+                Plan a workout program for me this week
             </button><br></br>
             <button 
                 className="chatOption"
                 onClick={() => setInputAndSubmit("What are some of my health strengths and weaknesses?")}
             >
-                <p>What are some of my health strengths and weaknesses</p>
+                What are some of my health strengths and weaknesses
             </button>
             <button 
                 className="chatOption"
                 onClick={() => setInputAndSubmit("How many calories did I eat yesterday?")}
             >
-                <p>How many calories did I eat yesterday?</p>
+                How many calories did I eat yesterday?
             </button>
         </div>
         )}
