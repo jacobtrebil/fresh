@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap'); 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -52,9 +54,10 @@ header h1 {
 .freshHeadline { 
   margin: 12px auto 0 auto !important; 
   color: black !important;
-  font-weight: 500 !important;
+  font-weight: 700 !important;
   display: inline-block;
   text-align: center;
+  font-family: "Questrial", sans-serif;
 }
 
 .glow {
@@ -90,7 +93,7 @@ header h1 {
 .icon {
   display: inline-block;
   vertical-align: top;
-  margin: 26px 0 0 10px;
+  margin: 5px 0 0 -15px;
   border-radius: 9999px;
 }
 

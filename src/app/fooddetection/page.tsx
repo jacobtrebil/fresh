@@ -8,6 +8,7 @@ import pepper from "../../../public/pepper.png";
 import grapes from "../../../public/grapes.png";
 import veggies from "../../../public/veggies.png";
 import pal from "../../../public/pal.png";
+import glow from "../../../public/glow.png";
 import { AIStreamParser } from 'ai';
 import { useCompletion } from 'ai/react';
  
@@ -474,8 +475,8 @@ export default function FoodDetection() {
     <div className="main">
       <header>
         <div className="logoSection">
-          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Buddy</h1>
-          <Image className="icon" src={pal} alt="icon" width={50} />
+          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Glow</h1>
+          <Image className="icon" src={glow} alt="icon" width={100} />
         </div>
         { !deviceName && (
           <div className="headerRight">
