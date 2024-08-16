@@ -23,7 +23,7 @@ export default function Chat() {
         <Image src={glow} alt="glow" className="glow" width={100} />
       </div>
       <div className="mainButtons">
-        <button className="mainButton" onClick={goToFoodDetection}>Photo Stream →</button>
+        <button className="mainButton" onClick={goToFoodDetection}>Live Analysis→</button>
         <button className="mainButton" onClick={goToHealthGPT}>Health Coach →</button>
         <button className="mainButton" onClick={goToWhoopData}>Suggestions →</button>
       </div>
