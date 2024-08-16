@@ -27,6 +27,13 @@ export async function POST(req: Request) {
   Do not mention previous sets / photos. Just give the overall context from all of the sets / photos combined with past context.
   previous context and insights: ${notes} context and insights: `;
 
+  const newPrompt2 = `You are an AI that accepts a set of images taken from a necklace with a camera and you return a description of health / wellness context and insights from the scene. 
+  You are sometimes given previous context as well. If you are given previous context, include the most interesting, insightful, and unique context and add all new context to your response as well. 
+  Focus on detecting food from the scene, looking for health data about the user, and displaying this data is key. 
+  ALWAYS give an answer between 2 and 5 sentences. Do not mention context about the camera or necklace taking the photos. Just health / wellness related insights about the subject and environment. 
+  Do not mention previous sets / photos. Just give the overall context from all of the sets / photos combined with past context.
+  previous context and insights: ${notes} context and insights: `;
+
   console.log("notes = ", notes);
   console.log("images = ", images);
   // console.log("images = ", images.length);
@@ -45,7 +52,7 @@ export async function POST(req: Request) {
             role: 'user',
             // @ts-ignore
             content: [
-                { type: "text", text: newPrompt},
+                { type: "text", text: newPrompt2},
                 ...images.map((image: any) => (
                   {
                     type: "image_url",

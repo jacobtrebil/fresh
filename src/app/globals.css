@@ -74,7 +74,7 @@ header h1 {
   padding: 8px 16px;
   font-size: 1rem;
   font-weight: 500;
-  margin: 10px 0 40px 0;
+  margin: 5px 0 20px 0;
 }
 
 .logoSection {
@@ -92,10 +92,26 @@ header h1 {
   font-weight: 700;
 }
 
+.liveLogo {
+  text-align: left;
+  margin: 10px 10px 0 20px !important;
+  display: inline-block;
+  color: black !important;
+  font-family: "Questrial", sans-serif;
+  font-weight: 700;
+}
+
+.liveLogoSection {
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  margin: 0 0 0 0;
+}
+
 .icon {
   display: inline-block;
   vertical-align: top;
-  margin: 5px 0 0 -15px;
+  margin: 17px 0 0 0px;
   border-radius: 9999px;
 }
 

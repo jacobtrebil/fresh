@@ -474,13 +474,13 @@ export default function FoodDetection() {
   return (
     <div className="main">
       <header>
-        <div className="logoSection">
-          <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Glow</h1>
-          <Image className="icon" src={glow} alt="icon" width={100} />
+        <div className="liveLogoSection">
+          <h1 className="liveLogo">Glow</h1>
+          <Image className="icon" src={glow} alt="icon" width={60} />
         </div>
         { !deviceName && (
           <div className="headerRight">
-            <button className="scan" onClick={scanForBLEDevices}>Connect Your Buddy</button>
+            <button className="scan" onClick={scanForBLEDevices}>Connect Your Glow</button>
           </div>
         )}
         { deviceName && (
@@ -504,7 +504,7 @@ export default function FoodDetection() {
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
             { base64Images.length > 0 && base64Images.length < 4 && !completion && (
-              <p className="aiLoadingMessage">Buddy will analyze 3 photos at a time...</p>
+              <p className="aiLoadingMessage">Glow will analyze 3 photos at a time...</p>
             )}
             { completion && (
             <p className="understandingText">{completion}</p>
