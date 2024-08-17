@@ -65,7 +65,7 @@ export default function Page() {
     <>
         <div className="chatLogoSection">
             <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Glow</h1>
-            <Image className="icon" src={glow} alt="icon" width={100} />
+            <Image className="chatIcon" src={glow} alt="icon" width={60} />
         </div>
         <div className="messagesSection" ref={chatSectionRef}>
             {messages.map(message => (

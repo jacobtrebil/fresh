@@ -1,6 +1,7 @@
 'use client';
 import glow from "../../public/glow.png";  
 import dieScore from "../../public/dieScore.png";
+import sadSun from "../../public/sadSun.png";
 import Image from "next/image";
  
 export default function Chat() {
@@ -27,11 +28,13 @@ export default function Chat() {
         <button className="mainButton" onClick={goToFoodDetection}>Live Analysis→</button>
         <button className="mainButton" onClick={goToHealthGPT}>Health Coach →</button>
         <div className="suggestionsSection">
-          <Image src={dieScore} alt="dieScore" className="dieScoreImg" width={100} />
-          <p className="dieScore">Die Score: 0.1</p>
+          <Image src={sadSun} alt="dieScore" className="dieScoreImg" width={150} />
+          <div className="dieScoreSection">
+            <p className="dieScore">Die Score</p>
+            <p className="score">1.15</p>
+          </div>
           <p className="streak">Streak: 5 days</p>
-          <p className="tip">Daily tip:</p>
-          <p className="suggestion">You've been snacking a lot. Reducing your eating frequency to 3 meals / day will reduce the aging damage of the foods that you eat.</p>
+          <p className="suggestion">Glow: You've been snacking a lot. Reducing your eating frequency to 3 meals / day will reduce the aging damage of the foods that you eat.</p>
         </div>
       </div>
     </div>

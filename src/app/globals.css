@@ -35,24 +35,41 @@
 
 .suggestionsSection {
   display: inline-block;
-  margin: 0 auto;
+  margin: 0 2.5% 0 2.5%;
   width: 30%;
   padding: 20px;
   border: 5px solid rgb(255, 221, 0);
   border-radius: 16px;
   height: 50vh;
   vertical-align: top;
+  text-align: left;
 }
 
 .dieScoreImg {
   text-align: left;
   display: inline-block;
+  margin: 10px 0 0 20px;
+  vertical-align: top;
+}
+
+.dieScoreSection {
+  display: inline-block;
+  margin: 0 auto;
+  width: 60%;
 }
 
 .dieScore {
   display: inline-block;
   text-align: left;
   font-family: 'Questrial', sans-serif;
+  font-size: 2rem;
+  margin: 20px 0 0 20px;
+}
+
+.score {
+  margin: 0 0 0 20px;
+  font-weight: 700;
+  font-size: 4rem;
 }
 
 .streak {
@@ -60,14 +77,10 @@
   font-family: 'Questrial', sans-serif;
 }
 
-.tip {
-  text-align: left;
-  font-family: 'Questrial', sans-serif;
-}
-
 .suggestion {
   text-align: left;
   font-family: 'Questrial', sans-serif;
+  font-size: 
 }
 
 header {
@@ -152,6 +165,14 @@ header h1 {
   margin: 17px 0 0 0px;
   border-radius: 9999px;
 }
+
+.chatIcon {
+  display: inline-block;
+  vertical-align: top;
+  margin: 22px 0 0 0px;
+  border-radius: 9999px;
+}
+
 
 .headerRight {
   width: 65%;
