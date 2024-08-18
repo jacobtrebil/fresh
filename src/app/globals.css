@@ -13,22 +13,26 @@
 .glowBubbleSection {
   width: 50%;
   margin: 0 auto;
-  padding: 20px 40px;
   display: block;
   height: auto;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
 }
 
 .glowSuggestionBubble {
   width: 60%;
   height: fit-content;
-  /* margin: 0 auto; */
-  float: right;
+  margin: 0 auto;
+  /* float: right; */
   background-color: #F4F4F4;
   border-top-left-radius: 0px;
   border-top-right-radius: 32px;
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   padding: 20px 40px;
+  display: block;
+  border: 1px solid grey;
 }
 
 .mainButtons {
