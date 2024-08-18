@@ -9,6 +9,7 @@ import grapes from "../../../public/grapes.png";
 import veggies from "../../../public/veggies.png";
 import pal from "../../../public/pal.png";
 import glow from "../../../public/glow.png";
+import fresh from "../../../public/leaf22.png";
 import { AIStreamParser } from 'ai';
 import { useCompletion } from 'ai/react';
  
@@ -475,12 +476,12 @@ export default function FoodDetection() {
     <div className="main">
       <header>
         <div className="liveLogoSection">
-          <h1 className="liveLogo">Glow</h1>
-          <Image className="icon" src={glow} alt="icon" width={60} />
+          <h1 className="liveLogo">Fresh</h1>
+          <Image className="icon" src={fresh} alt="icon" width={60} />
         </div>
         { !deviceName && (
           <div className="headerRight">
-            <button className="scan" onClick={scanForBLEDevices}>Connect Your Glow</button>
+            <button className="scan" onClick={scanForBLEDevices}>Connect Your Fresh</button>
           </div>
         )}
         { deviceName && (

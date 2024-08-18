@@ -5,6 +5,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import pal from '../../../public/pal.png';
 import glow from '../../../public/glow.png';
+import fresh from "../../../public/leaf22.png";
 
 export default function Page() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -64,8 +65,8 @@ export default function Page() {
   return (
     <>
         <div className="chatLogoSection">
-            <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Glow</h1>
-            <Image className="chatIcon" src={glow} alt="icon" width={60} />
+            <h1 className="logo" style={{ textAlign: "left", margin: "0 20px 0 0" }}>Fresh</h1>
+            <Image className="chatIcon" src={fresh} alt="icon" width={60} />
         </div>
         <div className="messagesSection" ref={chatSectionRef}>
             {messages.map(message => (

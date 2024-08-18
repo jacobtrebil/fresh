@@ -191,14 +191,14 @@ header h1 {
 .icon {
   display: inline-block;
   vertical-align: top;
-  margin: 17px 0 0 0px;
+  margin: 14px 0 0 -10px;
   border-radius: 9999px;
 }
 
 .chatIcon {
   display: inline-block;
   vertical-align: top;
-  margin: 22px 0 0 0px;
+  margin: 20px 0 0 -10px;
   border-radius: 9999px;
 }
 
