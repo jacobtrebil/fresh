@@ -6,8 +6,19 @@ import fresh from "../../public/freshleaf.png";
 import veggies from "../../public/grapes.png";
 import leaf from "../../public/leaf22.png";
 import Image from "next/image";
+import { useCompletion } from "ai/react";
+import { useEffect, useRef } from "react";
  
 export default function Chat() {
+
+  const { complete, completion, isLoading, error } = useCompletion({ api: '/api/suggestions'});
+  const hasFetched = useRef(false);
+
+  useEffect(() => {
+    if (hasFetched.current) return; 
+    hasFetched.current = true;
+    complete("");
+  }, [])
 
   const goToFoodDetection = () => {
     window.location.href = '/fooddetection';
@@ -29,7 +40,7 @@ export default function Chat() {
       </div>
       <div className="glowBubbleSection">
         <div className="glowSuggestionBubble">
-          <p className="suggestion">You've been snacking a lot! Reducing your eating frequency to 3 meals / day will reduce the aging damage of food</p>
+          <p className="suggestion">{completion}</p>
         </div>
       </div>
       <div className="mainButtons">
@@ -40,7 +51,13 @@ export default function Chat() {
   );
 }
 
-/*       <a href="https://chat.openai.com/" target="_blank" ><button className="button">Health Coach →</button></a><br></br> */ 
+/*
+
+ You've been snacking a lot! Reducing your eating frequency to 3 meals / day will reduce the aging damage of food
+
+<a href="https://chat.openai.com/" target="_blank" ><button className="button">Health Coach →</button></a><br></br> 
+
+*/ 
 
 /* 
 
