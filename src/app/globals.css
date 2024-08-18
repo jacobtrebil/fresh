@@ -10,22 +10,44 @@
   font-family: 'Questrial', sans-serif;
 }
 
+.glowBubbleSection {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: block;
+  height: auto;
+}
+
+.glowSuggestionBubble {
+  width: 60%;
+  height: fit-content;
+  /* margin: 0 auto; */
+  float: right;
+  background-color: #F4F4F4;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 32px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  padding: 20px 40px;
+}
+
 .mainButtons {
-  margin: 5% auto;
+  margin: 2.5% auto 5% auto;
   width: 100%;
   text-align: center;
   display: block;
 }
 
 .mainButton {
-  width: 20%;
+  width: 25%;
   height: 50vh;
   display: inline-block !important;
   background-color: #F4F4F4;
   color: black;
   border-radius: 16px;
-  margin: 0 2.5% 0 2.5%;
+  margin: 0 1% 0 1%;
   padding: 20px 40px;
+  vertical-align: top;
 }
 
 .mainButton:hover {
@@ -35,14 +57,21 @@
 
 .suggestionsSection {
   display: inline-block;
-  margin: 0 2.5% 0 2.5%;
-  width: 30%;
+  margin: 0 1% 0 1%;
+  width: 40%;
   padding: 20px;
   border: 5px solid rgb(255, 221, 0);
   border-radius: 16px;
   height: 50vh;
   vertical-align: top;
   text-align: left;
+}
+
+.dieScoreFullSection {
+  display: block;
+  margin: 0 auto !important;
+  width: auto;
+  white-space: nowrap;
 }
 
 .dieScoreImg {
@@ -55,21 +84,21 @@
 .dieScoreSection {
   display: inline-block;
   margin: 0 auto;
-  width: 60%;
 }
 
 .dieScore {
   display: inline-block;
   text-align: left;
   font-family: 'Questrial', sans-serif;
-  font-size: 2rem;
-  margin: 20px 0 0 20px;
+  font-size: 1.75rem;
+  margin: 25px 0 0 20px;
 }
 
 .score {
-  margin: 0 0 0 20px;
+  margin: -10px 0 0 20px;
   font-weight: 700;
   font-size: 4rem;
+  color: red;
 }
 
 .streak {
@@ -80,7 +109,7 @@
 .suggestion {
   text-align: left;
   font-family: 'Questrial', sans-serif;
-  font-size: 
+  font-size: 1rem;
 }
 
 header {
@@ -98,7 +127,7 @@ header h1 {
 }
 
 .logoSection {
-  margin: 5% auto 0 auto;
+  margin: 2.5% auto 0 auto;
   text-align: center !important;
 }
 
@@ -115,7 +144,7 @@ header h1 {
   display: inline-block !important;
   vertical-align: top !important;
   text-align: center;
-  margin: 17px 0 0 10px;
+  margin: 15px 0 0 0px;
 }
 
 .scan {
