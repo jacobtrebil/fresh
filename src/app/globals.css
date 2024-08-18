@@ -127,7 +127,7 @@ header h1 {
 }
 
 .logoSection {
-  margin: 2.5% auto 0 auto;
+  margin: 10px auto 0 auto;
   text-align: center !important;
 }
 
@@ -185,7 +185,7 @@ header h1 {
   display: inline-block;
   width: 30%;
   text-align: left;
-  margin: 0 0 0 0;
+  margin: 10px 0 0 0;
 }
 
 .icon {
@@ -208,7 +208,7 @@ header h1 {
   display: inline-block;
   float: right;
   text-align: right;
-  margin: 20px 40px 0 0;
+  margin: 30px 40px 0 0;
 }
 
 .connection {
