@@ -12,6 +12,7 @@ export async function POST(req: Request) {
   const newPrompt2 = `You are an AI that gives health suggestions. Keep them short, 1-2 sentences.
   Use context on my health data, like my recent diet choices, hydration frequency, and exercise habits to make personalized suggestions. 
   My day today: I had a KIND bar that is 150 calories and 3g protein. I had a salad with chicken for lunch. I've been snacking a lot! I've drank 6 glasses of water so far. It's 7pm. I worked out this morning. 
+  Do not say that I should drink 8 glasses of water today. If you suggest drinking more water, say how much more.
   example: You've been snacking a lot! Reducing your eating frequency to 3 meals / day will reduce the aging damage of food
   suggestion:`;
 

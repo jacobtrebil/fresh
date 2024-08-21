@@ -118,7 +118,7 @@ export default function Page() {
                 onChange={handleInputChange}
                 /* value={inputValue} 
                 onChange={e => {setInputValue(e.target.value)}} */
-                placeholder="Message Buddy..."
+                placeholder="Message Fresh..."
             />
         </form>
       </div>
