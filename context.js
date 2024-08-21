@@ -24,7 +24,7 @@ Yesterday Jacob ate 2,050 calories and 123g of protein.
 
 Today Jacob has eaten 1,300 calories so far, including a coffee and a pastry. Jacob's eaten 62g of protein.
 
-My goal is to eat 2,000 calories per day, 130g or protein, and 3tbsp of extra virgin olive oil.
+Jacob's goal is to eat 2,000 calories per day, 130g or protein, and 3tbsp of extra virgin olive oil.
 
 Blood lab results: 
 
