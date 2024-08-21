@@ -26,10 +26,6 @@ Today Jacob has eaten 1,300 calories so far, including a coffee and a pastry. Ja
 
 My goal is to eat 2,000 calories per day, 130g or protein, and 3tbsp of extra virgin olive oil.
 
-Do not suggest the total calories I should eat daily. If you suggest a calorie amount, make sure it is how many calories are left towards my goal of 2,000 calories per day.
-
-Jacob has been more productive than usual this week, with an intense work schedule. 
-
 Blood lab results: 
 
 Albumin: 4.8 g/dl
@@ -191,6 +187,10 @@ Caffeine sensitivity: higher
 Bitter taste perception: non taster
 Lactose tolerance: tolerant
 Coeliac predisposition: low
+
+Do not suggest the total calories I should eat daily. If you suggest a calorie amount, make sure it is how many calories are left towards my goal of 2,000 calories per day.
+
+Jacob has been more productive than usual this week, with an intense work schedule. 
 
 Below is a log of the current chat conversation, in case the user references previous messages. 
 Always answer the latest message. NEVER say based on the information provided, or anything like that. Simply answer the question. 
