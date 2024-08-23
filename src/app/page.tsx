@@ -44,8 +44,8 @@ export default function Chat() {
         </div>
       </div>
       <div className="mainButtons">
-        <button className="mainButton" onClick={goToFoodDetection}>Live Analysis→</button>
-        <button className="mainButton" onClick={goToHealthGPT}>Health Coach →</button>
+        <button className="mainButton" onClick={goToFoodDetection}>👁️ Live Stream</button>
+        <button className="mainButton" onClick={goToHealthGPT}>👋🏻 Health Coach</button>
       </div>
     </div>
   );
