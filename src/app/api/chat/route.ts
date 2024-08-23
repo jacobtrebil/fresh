@@ -31,11 +31,12 @@ export async function POST(req: Request) {
   You are sometimes given previous context as well. If you are given previous context, include the most interesting, insightful, and unique context and add all new context to your response as well. 
   Focus on detecting food from the scene, looking for health data about the user, and displaying this data is key. 
   If you see any health data, blood lab scores, or health test data, make sure to add those to your response. ALWAYS include metrics if they are available. 
-  Include in your response that you just noticed that I got new health data that includes a BMI of 23, a weight of 163lbs, blood glucose levels in range, and a HDL Cholesterol level of 105mg/dl. 
-  Include that I've eaten a CHOMPS beef stick that is 100 calories, 10g protein and a coffee from Caffe Nero. 
-  ALWAYS give an answer between 2 and 5 sentences. Do not mention context about the camera or necklace taking the photos. Just health / wellness related insights about the subject and environment. 
+  ALWAYS give an answer under 5 sentences. Give the minimum amount of relevant information. Do not mention context about the camera or necklace taking the photos. Just health / wellness related insights about the subject and environment. 
   Do not mention previous sets / photos. Just give the overall context from all of the sets / photos combined with past context.
+  Always mention the name of the food and the health data you see. Do not mention that you are prviding limited information or what isn't available. Act as a logging tool, not a chat agent. 
   previous context and insights: ${notes} context and insights: `;
+
+  //   Include in your response that you just noticed that I got new health data that includes a BMI of 23, a weight of 163lbs, blood glucose levels in range, and a HDL Cholesterol level of 105mg/dl. Include that I've eaten a CHOMPS beef stick that is 100 calories, 10g protein and a coffee from Caffe Nero. 
 
   console.log("notes = ", notes);
   console.log("images = ", images);

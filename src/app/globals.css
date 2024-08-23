@@ -11,7 +11,7 @@
 }
 
 .glowBubbleSection {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
   display: block;
   height: auto;
@@ -21,7 +21,7 @@
 }
 
 .glowSuggestionBubble {
-  width: 60%;
+  width: 50%;
   height: fit-content;
   margin: 0 auto;
   /* float: right; */
@@ -44,7 +44,7 @@
 
 .mainButton {
   width: 25%;
-  height: 50vh;
+  height: 20vh;
   display: inline-block !important;
   background-color: #F4F4F4;
   color: black;
@@ -52,6 +52,7 @@
   margin: 0 1% 0 1%;
   padding: 20px 40px;
   vertical-align: top;
+  font-size: 1.25rem;
 }
 
 .mainButton:hover {
@@ -113,7 +114,7 @@
 .suggestion {
   text-align: left;
   font-family: 'Questrial', sans-serif;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 header {

@@ -486,7 +486,7 @@ export default function FoodDetection() {
         )}
         { deviceName && (
           <div className="headerRight">
-            <p className="connection">Connected to {deviceName}</p>
+            <p className="connection">Connected to Fresh</p>
             <p className="batteryPercentage">Battery: <b>{batteryLevel}%</b></p>
           </div>
         )}
@@ -505,7 +505,7 @@ export default function FoodDetection() {
           <div className="contextSection">
             <h2 className="aiAnalysis">Understanding</h2>
             { base64Images.length > 0 && base64Images.length < 4 && !completion && (
-              <p className="aiLoadingMessage">Glow will analyze 3 photos at a time...</p>
+              <p className="aiLoadingMessage">Fresh will analyze 3 photos at a time...</p>
             )}
             { completion && (
             <p className="understandingText">{completion}</p>
