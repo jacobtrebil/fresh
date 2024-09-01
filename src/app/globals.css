@@ -565,6 +565,21 @@ input {
   vertical-align: top;
 }
 
+.goal {
+  font-weight: 700;
+  font-size: 1.25rem;
+  background-color: yellow;
+}
+
+@media only screen and (max-width: 700px) {
+  .chatBox {
+    width: 90%;
+  }
+  .messagesSection {
+    width: 90%;
+  }
+}
+
 .chatLogoSection {
   text-align: center;
 }

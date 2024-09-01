@@ -1,9 +1,4 @@
 'use client';
-import glow from "../../public/glow.png";  
-import dieScore from "../../public/dieScore.png";
-import sadSun from "../../public/sadSun.png";
-import fresh from "../../public/freshleaf.png";
-import veggies from "../../public/grapes.png";
 import leaf from "../../public/leaf22.png";
 import Image from "next/image";
 import { useCompletion } from "ai/react";
